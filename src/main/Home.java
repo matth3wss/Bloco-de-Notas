@@ -20,11 +20,7 @@ public class Home extends javax.swing.JFrame {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated
-    // <editor-fold defaultstate="collapsed" desc="Generated
-    // <editor-fold defaultstate="collapsed" desc="Generated
-    // <editor-fold defaultstate="collapsed" desc="Generated
-    // <editor-fold defaultstate="collapsed" desc="Generated
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">
+    // Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         jSplitPane1 = new javax.swing.JSplitPane();
@@ -107,7 +103,7 @@ public class Home extends javax.swing.JFrame {
                                 .addContainerGap()));
 
         pack();
-    }// </editor-fold>
+    }// </editor-fold>//GEN-END:initComponents
 
     private void btnNewNoteActionPerformed(java.awt.event.ActionEvent evt) {
         cardLayout.show(contentPanel, "NewNote");
@@ -134,10 +130,6 @@ public class Home extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(Home.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         // </editor-fold>
-        // </editor-fold>
-
-        // </editor-fold>
-        // </editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -147,7 +139,7 @@ public class Home extends javax.swing.JFrame {
         });
     }
 
-    // Variables declaration - do not modify
+    // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnNewNote;
     private javax.swing.JButton btnNewTaskList;
     private javax.swing.JPanel contentPanel;
@@ -155,5 +147,5 @@ public class Home extends javax.swing.JFrame {
     private pages.NewNote newNote;
     private pages.NewTaskList newTaskList;
     private javax.swing.JPanel sideMenuPanel;
-    // End of variables declaration
+    // End of variables declaration//GEN-END:variables
 }
