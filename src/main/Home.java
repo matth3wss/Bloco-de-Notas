@@ -104,11 +104,15 @@ public class Home extends javax.swing.JFrame {
     private void btnNotesActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnNotesActionPerformed
         cardLayout.show(contentPanel, "NewNote");
         notesPanel.searchNotes.requestFocusInWindow();
+        remindersPanel.searchReminders.setText("Pesquisar lembretes");
+        remindersPanel.searchReminders.setCaretPosition(0);
     }// GEN-LAST:event_btnNotesActionPerformed
 
     private void btnRemindersActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnRemindersActionPerformed
         cardLayout.show(contentPanel, "NewTaskList");
         remindersPanel.searchReminders.requestFocusInWindow();
+        notesPanel.searchNotes.setText("Pesquisar notas");
+        notesPanel.searchNotes.setCaretPosition(0);
     }// GEN-LAST:event_btnRemindersActionPerformed
 
     /**

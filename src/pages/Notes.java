@@ -43,6 +43,9 @@ public class Notes extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated
     // <editor-fold defaultstate="collapsed" desc="Generated
     // <editor-fold defaultstate="collapsed" desc="Generated
+    // <editor-fold defaultstate="collapsed" desc="Generated
+    // <editor-fold defaultstate="collapsed" desc="Generated
+    // <editor-fold defaultstate="collapsed" desc="Generated
     // Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -62,24 +65,10 @@ public class Notes extends javax.swing.JPanel {
                         .addGap(0, 169, Short.MAX_VALUE));
 
         searchNotes.setText("Pesquisar notas");
+        searchNotes.setCaretPosition(0);
         searchNotes.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 searchNotesFocusGained(evt);
-            }
-        });
-        searchNotes.addMouseListener(new java.awt.event.MouseAdapter() {
-
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                searchNotesMouseExited(evt);
-            }
-
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                searchNotesMousePressed(evt);
-            }
-        });
-        searchNotes.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                searchNotesActionPerformed(evt);
             }
         });
         searchNotes.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -113,26 +102,21 @@ public class Notes extends javax.swing.JPanel {
                                 .addContainerGap()));
     }// </editor-fold>//GEN-END:initComponents
 
-    private void searchNotesMousePressed(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_searchNotesMousePressed
-        
-    }// GEN-LAST:event_searchNotesMousePressed
-
     private void searchNotesKeyPressed(java.awt.event.KeyEvent evt) {// GEN-FIRST:event_searchNotesKeyPressed
         if (searchNotes.getText().equals("Pesquisar notas")) {
             searchNotes.setText("");
         }
+        searchNotes.setForeground(Color.BLACK);
     }// GEN-LAST:event_searchNotesKeyPressed
-
-    private void searchNotesMouseExited(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_searchNotesMouseExited
-
-    }// GEN-LAST:event_searchNotesMouseExited
-
-    private void searchNotesActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_searchNotesActionPerformed
-
-    }// GEN-LAST:event_searchNotesActionPerformed
 
     private void searchNotesFocusGained(java.awt.event.FocusEvent evt) {// GEN-FIRST:event_searchNotesFocusGained
         searchNotes.requestFocusInWindow();
+        if (searchNotes.getText().equals("Pesquisar notas")) {
+            searchNotes.setForeground(Color.LIGHT_GRAY);
+        } else {
+            searchNotes.setForeground(Color.BLACK);
+        }
+
     }// GEN-LAST:event_searchNotesFocusGained
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

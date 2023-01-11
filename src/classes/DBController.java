@@ -1,6 +1,6 @@
 package classes;
 
-import classes.Task;
+import classes.NewNote;
 import java.sql.*;
 import javax.swing.*;
 import java.sql.Date;
@@ -16,16 +16,16 @@ public class DBController {
         }
     }
 
-    public void addNote(Task task) {
+    public void addNote(NewNote note) {
         String sql = "INSERT INTO lists (title, description, date, priority) VALUES (?, ?, ?, ?)";
 
         try {
-            Date sqlDate = new Date(task.getDateCreated().getTime());
+            Date sqlDate = new Date(note.getDateCreated().getTime());
             PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, task.getTitle());
-            pstmt.setString(2, task.getDescription());
+            pstmt.setString(1, note.getTitle());
+            pstmt.setString(2, note.getDescription());
             pstmt.setDate(3, sqlDate);
-            pstmt.setInt(4, task.getPriority());
+            pstmt.setInt(4, note.getPriority());
             pstmt.executeUpdate();
 
         } catch (SQLException e) {

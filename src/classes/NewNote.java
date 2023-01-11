@@ -2,14 +2,14 @@ package classes;
 
 import java.util.Date;
 
-public class Task {
+public class NewNote {
     private String title;
     private String description;
     private Date dateCreated;
     private int priority;
     
 
-    Task(String title, String description, int priority) {
+    NewNote(String title, String description, int priority) {
         this.title = title;
         this.description = description;
         this.dateCreated = new Date();

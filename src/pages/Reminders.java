@@ -1,6 +1,8 @@
 package pages;
 
 import javax.swing.*;
+import javax.swing.text.AttributeSet.ColorAttribute;
+
 import java.awt.*;
 import java.awt.event.*;
 
@@ -24,6 +26,9 @@ public class Reminders extends javax.swing.JPanel {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated
+    // <editor-fold defaultstate="collapsed" desc="Generated
+    // <editor-fold defaultstate="collapsed" desc="Generated
+    // <editor-fold defaultstate="collapsed" desc="Generated
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -43,15 +48,16 @@ public class Reminders extends javax.swing.JPanel {
             .addGap(0, 151, Short.MAX_VALUE)
         );
 
-        searchReminders.setText("jTextField1");
+        searchReminders.setText("Pesquisar lembretes");
+        searchReminders.setCaretPosition(0);
         searchReminders.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 searchRemindersFocusGained(evt);
             }
         });
-        searchReminders.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                searchRemindersActionPerformed(evt);
+        searchReminders.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                searchRemindersKeyPressed(evt);
             }
         });
 
@@ -77,13 +83,22 @@ public class Reminders extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void searchRemindersFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_searchRemindersFocusGained
-        searchReminders.requestFocusInWindow();
-    }//GEN-LAST:event_searchRemindersFocusGained
+    private void searchRemindersKeyPressed(java.awt.event.KeyEvent evt) {// GEN-FIRST:event_searchRemindersKeyPressed
+        if (searchReminders.getText().equals("Pesquisar lembretes")) {
+            searchReminders.setText("");
+        }
+        searchReminders.setForeground(Color.BLACK);
+    }// GEN-LAST:event_searchRemindersKeyPressed
 
-    private void searchRemindersActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_searchRemindersActionPerformed
-        // TODO add your handling code here:
-    }// GEN-LAST:event_searchRemindersActionPerformed
+    private void searchRemindersFocusGained(java.awt.event.FocusEvent evt) {// GEN-FIRST:event_searchRemindersFocusGained
+        searchReminders.requestFocusInWindow();
+        if (searchReminders.getText().equals("Pesquisar lembretes")) {
+            searchReminders.setForeground(Color.LIGHT_GRAY);
+        } else {
+            searchReminders.setForeground(Color.BLACK);
+        }
+
+    }// GEN-LAST:event_searchRemindersFocusGained
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel remindersPanel;
