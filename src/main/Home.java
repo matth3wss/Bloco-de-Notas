@@ -5,6 +5,7 @@ import java.awt.*;
 public class Home extends javax.swing.JFrame {
 
     CardLayout cardLayout = new CardLayout();
+    DBController db = new DBController("lists.db");
 
     public Home() {
         initComponents();
