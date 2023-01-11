@@ -20,21 +20,21 @@ public class Home extends javax.swing.JFrame {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated
-    // Code">//GEN-BEGIN:initComponents
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jSplitPane1 = new javax.swing.JSplitPane();
+        jSplitPanel = new javax.swing.JSplitPane();
         sideMenuPanel = new javax.swing.JPanel();
         btnNewNote = new javax.swing.JButton();
         btnNewTaskList = new javax.swing.JButton();
         contentPanel = new javax.swing.JPanel();
-        newTaskList = new pages.NewTaskList();
-        newNote = new pages.NewNote();
+        newTaskList = new pages.Reminders();
+        newNote = new pages.Notes();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jSplitPane1.setDividerLocation(130);
-        jSplitPane1.setPreferredSize(new java.awt.Dimension(500, 500));
+        jSplitPanel.setDividerLocation(130);
+        jSplitPanel.setPreferredSize(new java.awt.Dimension(500, 500));
 
         sideMenuPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         sideMenuPanel.setAlignmentX(0.0F);
@@ -58,60 +58,63 @@ public class Home extends javax.swing.JFrame {
         javax.swing.GroupLayout sideMenuPanelLayout = new javax.swing.GroupLayout(sideMenuPanel);
         sideMenuPanel.setLayout(sideMenuPanelLayout);
         sideMenuPanelLayout.setHorizontalGroup(
-                sideMenuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(sideMenuPanelLayout.createSequentialGroup()
-                                .addContainerGap()
-                                .addGroup(sideMenuPanelLayout
-                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                                        .addComponent(btnNewNote)
-                                        .addComponent(btnNewTaskList))
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
+            sideMenuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(sideMenuPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(sideMenuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(btnNewNote)
+                    .addComponent(btnNewTaskList))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
         sideMenuPanelLayout.setVerticalGroup(
-                sideMenuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(sideMenuPanelLayout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(btnNewNote, javax.swing.GroupLayout.PREFERRED_SIZE, 23,
-                                        javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnNewTaskList)
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
+            sideMenuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(sideMenuPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btnNewNote, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnNewTaskList)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
-        jSplitPane1.setLeftComponent(sideMenuPanel);
+        jSplitPanel.setLeftComponent(sideMenuPanel);
 
         contentPanel.setLayout(new java.awt.CardLayout());
         contentPanel.add(newTaskList, "card3");
-
-        newNote.setAlignmentX(0.0F);
-        newNote.setAlignmentY(0.0F);
         contentPanel.add(newNote, "card2");
 
-        jSplitPane1.setRightComponent(contentPanel);
+        jSplitPanel.setRightComponent(contentPanel);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 417, Short.MAX_VALUE)
-                                .addContainerGap()));
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(jSplitPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 388, Short.MAX_VALUE)
+                    .addContainerGap()))
+        );
         layout.setVerticalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jSplitPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 182, Short.MAX_VALUE)
-                                .addContainerGap()));
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(jSplitPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 288, Short.MAX_VALUE)
+                    .addContainerGap()))
+        );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnNewNoteActionPerformed(java.awt.event.ActionEvent evt) {
-        cardLayout.show(contentPanel, "NewNote");
-    }// GEN-LAST:event_btnPage1ActionPerformed
-
-    private void btnNewTaskListActionPerformed(java.awt.event.ActionEvent evt) {
+    private void btnNewTaskListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewTaskListActionPerformed
         cardLayout.show(contentPanel, "NewTaskList");
-    }// GEN-LAST:event_btnPage2ActionPerformed
+    }//GEN-LAST:event_btnNewTaskListActionPerformed
+
+    private void btnNewNoteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewNoteActionPerformed
+        cardLayout.show(contentPanel, "NewNote");
+    }//GEN-LAST:event_btnNewNoteActionPerformed
 
     /**
      * @param args the command line arguments
@@ -143,9 +146,9 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JButton btnNewNote;
     private javax.swing.JButton btnNewTaskList;
     private javax.swing.JPanel contentPanel;
-    private javax.swing.JSplitPane jSplitPane1;
-    private pages.NewNote newNote;
-    private pages.NewTaskList newTaskList;
+    private javax.swing.JSplitPane jSplitPanel;
+    private pages.Notes newNote;
+    private pages.Reminders newTaskList;
     private javax.swing.JPanel sideMenuPanel;
     // End of variables declaration//GEN-END:variables
 }
