@@ -3,6 +3,7 @@ package pages;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import javax.swing.text.DefaultCaret;
 
 public class Notes extends javax.swing.JPanel {
 
@@ -12,24 +13,25 @@ public class Notes extends javax.swing.JPanel {
     }
 
     public void myInitComponents() {
+
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 searchNotes.requestFocusInWindow();
             }
         });
-        
-        searchNotes.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                performSearch();
-            }
-        });
+
+        // searchNotes.addActionListener(new ActionListener() {;
+        // @Override
+        // public void actionPerformed(ActionEvent e) {
+        // performSearch();
+        // }
+        // });
     }
 
-    public void performSearch() {
-        String searchText = searchNotes.getText();
-        // code to perform search using searchText
-    }
+    // public void performSearch() {
+    // String searchText = searchNotes.getText();
+    // // code to perform search using searchText
+    // }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -38,7 +40,10 @@ public class Notes extends javax.swing.JPanel {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    // <editor-fold defaultstate="collapsed" desc="Generated
+    // <editor-fold defaultstate="collapsed" desc="Generated
+    // <editor-fold defaultstate="collapsed" desc="Generated
+    // Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         notesPanel = new javax.swing.JPanel();
@@ -50,18 +55,26 @@ public class Notes extends javax.swing.JPanel {
         javax.swing.GroupLayout notesPanelLayout = new javax.swing.GroupLayout(notesPanel);
         notesPanel.setLayout(notesPanelLayout);
         notesPanelLayout.setHorizontalGroup(
-            notesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 247, Short.MAX_VALUE)
-        );
+                notesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 0, Short.MAX_VALUE));
         notesPanelLayout.setVerticalGroup(
-            notesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 148, Short.MAX_VALUE)
-        );
+                notesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGap(0, 169, Short.MAX_VALUE));
 
-        searchNotes.setText("jTextField1");
+        searchNotes.setText("Pesquisar notas");
         searchNotes.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 searchNotesFocusGained(evt);
+            }
+        });
+        searchNotes.addMouseListener(new java.awt.event.MouseAdapter() {
+
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                searchNotesMouseExited(evt);
+            }
+
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                searchNotesMousePressed(evt);
             }
         });
         searchNotes.addActionListener(new java.awt.event.ActionListener() {
@@ -69,31 +82,53 @@ public class Notes extends javax.swing.JPanel {
                 searchNotesActionPerformed(evt);
             }
         });
+        searchNotes.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                searchNotesKeyPressed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(notesPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 257, Short.MAX_VALUE)
-                    .addComponent(searchNotes))
-                .addContainerGap())
-        );
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(searchNotes, javax.swing.GroupLayout.DEFAULT_SIZE, 298,
+                                                Short.MAX_VALUE)
+                                        .addComponent(notesPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 298,
+                                                Short.MAX_VALUE))
+                                .addContainerGap()));
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(searchNotes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(notesPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 171, Short.MAX_VALUE)
-                .addContainerGap())
-        );
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(searchNotes, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 124,
+                                        Short.MAX_VALUE)
+                                .addComponent(notesPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 192,
+                                        javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap()));
     }// </editor-fold>//GEN-END:initComponents
 
+    private void searchNotesMousePressed(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_searchNotesMousePressed
+        
+    }// GEN-LAST:event_searchNotesMousePressed
+
+    private void searchNotesKeyPressed(java.awt.event.KeyEvent evt) {// GEN-FIRST:event_searchNotesKeyPressed
+        if (searchNotes.getText().equals("Pesquisar notas")) {
+            searchNotes.setText("");
+        }
+    }// GEN-LAST:event_searchNotesKeyPressed
+
+    private void searchNotesMouseExited(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_searchNotesMouseExited
+
+    }// GEN-LAST:event_searchNotesMouseExited
+
     private void searchNotesActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_searchNotesActionPerformed
-        // TODO add your handling code here:
+
     }// GEN-LAST:event_searchNotesActionPerformed
 
     private void searchNotesFocusGained(java.awt.event.FocusEvent evt) {// GEN-FIRST:event_searchNotesFocusGained

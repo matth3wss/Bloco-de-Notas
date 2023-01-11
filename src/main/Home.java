@@ -9,8 +9,8 @@ public class Home extends javax.swing.JFrame {
     public Home() {
         initComponents();
         contentPanel.setLayout(cardLayout);
-        contentPanel.add(newNote, "NewNote");
-        contentPanel.add(newTaskList, "NewTaskList");
+        contentPanel.add(notesPanel, "NewNote");
+        contentPanel.add(remindersPanel, "NewTaskList");
     }
 
     /**
@@ -20,107 +20,110 @@ public class Home extends javax.swing.JFrame {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    // <editor-fold defaultstate="collapsed" desc="Generated
+    // Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jSplitPanel = new javax.swing.JSplitPane();
         sideMenuPanel = new javax.swing.JPanel();
-        btnNewNote = new javax.swing.JButton();
-        btnNewTaskList = new javax.swing.JButton();
+        btnNotes = new javax.swing.JButton();
+        btnReminders = new javax.swing.JButton();
         contentPanel = new javax.swing.JPanel();
-        newTaskList = new pages.Reminders();
-        newNote = new pages.Notes();
+        notesPanel = new pages.Notes();
+        remindersPanel = new pages.Reminders();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jSplitPanel.setDividerLocation(130);
-        jSplitPanel.setPreferredSize(new java.awt.Dimension(500, 500));
+        sideMenuPanel.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        sideMenuPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        sideMenuPanel.setAlignmentX(0.0F);
-        sideMenuPanel.setAlignmentY(0.0F);
-        sideMenuPanel.setPreferredSize(new java.awt.Dimension(80, 80));
-
-        btnNewNote.setText("Notas");
-        btnNewNote.addActionListener(new java.awt.event.ActionListener() {
+        btnNotes.setText("Notas");
+        btnNotes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnNewNoteActionPerformed(evt);
+                btnNotesActionPerformed(evt);
             }
         });
 
-        btnNewTaskList.setText("Lista de Tarefas");
-        btnNewTaskList.addActionListener(new java.awt.event.ActionListener() {
+        btnReminders.setText("Lembretes");
+        btnReminders.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnNewTaskListActionPerformed(evt);
+                btnRemindersActionPerformed(evt);
             }
         });
 
         javax.swing.GroupLayout sideMenuPanelLayout = new javax.swing.GroupLayout(sideMenuPanel);
         sideMenuPanel.setLayout(sideMenuPanelLayout);
         sideMenuPanelLayout.setHorizontalGroup(
-            sideMenuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(sideMenuPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(sideMenuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(btnNewNote)
-                    .addComponent(btnNewTaskList))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+                sideMenuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(sideMenuPanelLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(sideMenuPanelLayout
+                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(btnNotes, javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(btnReminders, javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addContainerGap()));
         sideMenuPanelLayout.setVerticalGroup(
-            sideMenuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(sideMenuPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(btnNewNote, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnNewTaskList)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
+                sideMenuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(sideMenuPanelLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(btnNotes)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnReminders)
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
 
-        jSplitPanel.setLeftComponent(sideMenuPanel);
-
+        contentPanel.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         contentPanel.setLayout(new java.awt.CardLayout());
-        contentPanel.add(newTaskList, "card3");
-        contentPanel.add(newNote, "card2");
-
-        jSplitPanel.setRightComponent(contentPanel);
+        contentPanel.add(notesPanel, "card3");
+        contentPanel.add(remindersPanel, "card4");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(jSplitPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 388, Short.MAX_VALUE)
-                    .addContainerGap()))
-        );
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(sideMenuPanel, javax.swing.GroupLayout.PREFERRED_SIZE,
+                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(contentPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 291, Short.MAX_VALUE)
+                                .addContainerGap()));
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(jSplitPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 288, Short.MAX_VALUE)
-                    .addContainerGap()))
-        );
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(contentPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 253,
+                                                Short.MAX_VALUE)
+                                        .addComponent(sideMenuPanel, javax.swing.GroupLayout.DEFAULT_SIZE,
+                                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addContainerGap()));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnNewTaskListActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewTaskListActionPerformed
-        cardLayout.show(contentPanel, "NewTaskList");
-    }//GEN-LAST:event_btnNewTaskListActionPerformed
-
-    private void btnNewNoteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNewNoteActionPerformed
+    private void btnNotesActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnNotesActionPerformed
         cardLayout.show(contentPanel, "NewNote");
-    }//GEN-LAST:event_btnNewNoteActionPerformed
+        notesPanel.searchNotes.requestFocusInWindow();
+    }// GEN-LAST:event_btnNotesActionPerformed
+
+    private void btnRemindersActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnRemindersActionPerformed
+        cardLayout.show(contentPanel, "NewTaskList");
+        remindersPanel.searchReminders.requestFocusInWindow();
+    }// GEN-LAST:event_btnRemindersActionPerformed
 
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-
+        /* Set the Nimbus look and feel */
+        // <editor-fold defaultstate="collapsed" desc=" Look and feel setting code
+        // (optional) ">
+        /*
+         * If Nimbus (introduced in Java SE 6) is not available, stay with the default
+         * look and feel.
+         * For details see
+         * http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
+         */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Windows".equals(info.getName())) {
@@ -134,6 +137,8 @@ public class Home extends javax.swing.JFrame {
         }
         // </editor-fold>
 
+        // </editor-fold>
+
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -143,12 +148,11 @@ public class Home extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnNewNote;
-    private javax.swing.JButton btnNewTaskList;
+    private javax.swing.JButton btnNotes;
+    private javax.swing.JButton btnReminders;
     private javax.swing.JPanel contentPanel;
-    private javax.swing.JSplitPane jSplitPanel;
-    private pages.Notes newNote;
-    private pages.Reminders newTaskList;
+    private pages.Notes notesPanel;
+    private pages.Reminders remindersPanel;
     private javax.swing.JPanel sideMenuPanel;
     // End of variables declaration//GEN-END:variables
 }

@@ -1,5 +1,7 @@
 package tests;
 
+impor
+
 import java.awt.*;
 
 
@@ -43,6 +45,11 @@ public class Home extends javax.swing.JFrame {
         });
 
         btnReminders.setText("Lembretes");
+        btnReminders.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnRemindersMouseClicked(evt);
+            }
+        });
         btnReminders.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRemindersActionPerformed(evt);
@@ -108,6 +115,10 @@ public class Home extends javax.swing.JFrame {
         cardLayout.show(contentPanel, "NewTaskList");
         remindersPanel.searchReminders.requestFocusInWindow();                                                                        
     }//GEN-LAST:event_btnRemindersActionPerformed
+
+    private void btnRemindersMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRemindersMouseClicked
+        searchNotes.setText("Pesquisar notas");
+    }//GEN-LAST:event_btnRemindersMouseClicked
 
     /**
      * @param args the command line arguments
