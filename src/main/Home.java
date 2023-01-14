@@ -1,17 +1,34 @@
 package main;
 
+import classes.DBController;
 import java.awt.*;
+import javax.swing.*;
+import pages.Notes;
 
 public class Home extends javax.swing.JFrame {
 
+    DBController db = new DBController("notes.db");
     CardLayout cardLayout = new CardLayout();
-    DBController db = new DBController("lists.db");
+    GridLayout gridLayout = new GridLayout(0, 5);
 
     public Home() {
         initComponents();
+        myInitComponents();
+
+    }
+
+    public void myInitComponents() {
         contentPanel.setLayout(cardLayout);
-        contentPanel.add(notesPanel, "NewNote");
-        contentPanel.add(remindersPanel, "NewTaskList");
+        contentPanel.add(contentNotesPanel, "NewNote");
+        contentPanel.add(contentRemindersPanel, "NewTaskList");
+
+        contentNotesPanel.allNotesPanel.setLayout(gridLayout);
+
+        if (db != null) {
+            db.retrieveAndAddAllNotes(contentNotesPanel.allNotesPanel);
+        } else {
+            JOptionPane.showMessageDialog(null, "Erro ao conectar ao banco de dados");
+        }
     }
 
     /**
@@ -21,7 +38,6 @@ public class Home extends javax.swing.JFrame {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated
-    // <editor-fold defaultstate="collapsed" desc="Generated
     // Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -29,10 +45,10 @@ public class Home extends javax.swing.JFrame {
         btnNotes = new javax.swing.JButton();
         btnReminders = new javax.swing.JButton();
         contentPanel = new javax.swing.JPanel();
-        notesPanel = new pages.Notes();
-        remindersPanel = new pages.Reminders();
+        contentNotesPanel = new pages.Notes();
+        contentRemindersPanel = new pages.Reminders();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         sideMenuPanel.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
@@ -74,8 +90,8 @@ public class Home extends javax.swing.JFrame {
 
         contentPanel.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         contentPanel.setLayout(new java.awt.CardLayout());
-        contentPanel.add(notesPanel, "card3");
-        contentPanel.add(remindersPanel, "card4");
+        contentPanel.add(contentNotesPanel, "notes");
+        contentPanel.add(contentRemindersPanel, "reminders");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -86,49 +102,42 @@ public class Home extends javax.swing.JFrame {
                                 .addComponent(sideMenuPanel, javax.swing.GroupLayout.PREFERRED_SIZE,
                                         javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(contentPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 291, Short.MAX_VALUE)
+                                .addComponent(contentPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 867, Short.MAX_VALUE)
                                 .addContainerGap()));
         layout.setVerticalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addContainerGap()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(contentPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 253,
+                                        .addComponent(contentPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 488,
                                                 Short.MAX_VALUE)
                                         .addComponent(sideMenuPanel, javax.swing.GroupLayout.DEFAULT_SIZE,
                                                 javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addContainerGap()));
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnNotesActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnNotesActionPerformed
         cardLayout.show(contentPanel, "NewNote");
-        notesPanel.searchNotes.requestFocusInWindow();
-        remindersPanel.searchReminders.setText("Pesquisar lembretes");
-        remindersPanel.searchReminders.setCaretPosition(0);
+        contentNotesPanel.searchNotes.requestFocusInWindow();
+        contentRemindersPanel.searchReminders.setText("Pesquisar lembretes");
+        contentRemindersPanel.searchReminders.setCaretPosition(0);
     }// GEN-LAST:event_btnNotesActionPerformed
 
     private void btnRemindersActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnRemindersActionPerformed
         cardLayout.show(contentPanel, "NewTaskList");
-        remindersPanel.searchReminders.requestFocusInWindow();
-        notesPanel.searchNotes.setText("Pesquisar notas");
-        notesPanel.searchNotes.setCaretPosition(0);
+        contentRemindersPanel.searchReminders.requestFocusInWindow();
+        contentNotesPanel.searchNotes.setText("Pesquisar notas");
+        contentNotesPanel.searchNotes.setCaretPosition(0);
     }// GEN-LAST:event_btnRemindersActionPerformed
 
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        // <editor-fold defaultstate="collapsed" desc=" Look and feel setting code
-        // (optional) ">
-        /*
-         * If Nimbus (introduced in Java SE 6) is not available, stay with the default
-         * look and feel.
-         * For details see
-         * http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
-         */
+
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Windows".equals(info.getName())) {
@@ -155,9 +164,9 @@ public class Home extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnNotes;
     private javax.swing.JButton btnReminders;
+    private pages.Notes contentNotesPanel;
     private javax.swing.JPanel contentPanel;
-    private pages.Notes notesPanel;
-    private pages.Reminders remindersPanel;
+    private pages.Reminders contentRemindersPanel;
     private javax.swing.JPanel sideMenuPanel;
     // End of variables declaration//GEN-END:variables
 }

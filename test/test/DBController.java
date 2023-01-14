@@ -1,4 +1,4 @@
-package classes;
+package test;
 
 import classes.NewNote;
 import panels.*;
@@ -105,10 +105,7 @@ public class DBController {
                 notesBlock.notesBlockTitle.setText(rs.getString("title"));
                 notesBlock.noteBlockDescription.setText(rs.getString("description"));
                 notesBlock.notesBlockDateCreated.setText(rs.getDate("dateCreated").toString());
-                if (rs.getDate("reminderDate") != null) {
-                    notesBlock.notesBlockReminderDate.setText(rs.getDate("reminderDate").toString());
-                }
-
+                notesBlock.notesBlockReminderDate.setText(rs.getDate("reminderDate").toString());
                 notesBlock.notesBlockPriority.setText("Prioridade: " + rs.getString("priority"));
 
                 // Add the NotesBlock to the notesPanel

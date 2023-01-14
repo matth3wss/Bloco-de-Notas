@@ -1,18 +1,23 @@
 package classes;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class NewNote {
     private String title;
     private String description;
-    private Date dateCreated;
-    private int priority;
-    
+    private java.sql.Date dateCreated;
+    private java.util.Date reminderDate;
+    private String priority;
 
-    NewNote(String title, String description, int priority) {
+    public NewNote() {
+        this.dateCreated = new java.sql.Date(System.currentTimeMillis());
+    }
+
+    public NewNote(String title, String description, java.util.Date reminderDate, String priority) {
         this.title = title;
         this.description = description;
-        this.dateCreated = new Date();
+        this.dateCreated = new java.sql.Date(System.currentTimeMillis());
+        this.reminderDate = null;
         this.priority = priority;
     }
 
@@ -32,19 +37,28 @@ public class NewNote {
         this.description = description;
     }
 
-    public int getPriority() {
-        return priority;
-    }
-
-    public void setPriority(int priority) {
-        this.priority = priority;
-    }
-
-    public Date getDateCreated() {
+    public java.sql.Date getDateCreated() {
         return dateCreated;
     }
 
-    public void setDateCreated(Date dateCreated) {
+    public void setDateCreated(java.sql.Date dateCreated) {
         this.dateCreated = dateCreated;
     }
+
+    public java.util.Date getReminderDate() {
+        return reminderDate;
+    }
+
+    public void setReminderDate(java.util.Date reminderDate) {
+        this.reminderDate = reminderDate;
+    }
+
+    public String getPriority() {
+        return priority;
+    }
+
+    public void setPriority(String priority) {
+        this.priority = priority;
+    }
+
 }
