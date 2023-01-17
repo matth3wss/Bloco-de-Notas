@@ -1,33 +1,58 @@
 package main;
 
-import classes.DBController;
+import classes.*;
 import java.awt.*;
 import javax.swing.*;
-import pages.Notes;
 
 public class Home extends javax.swing.JFrame {
 
-    DBController db = new DBController("notes.db");
-    CardLayout cardLayout = new CardLayout();
-    GridLayout gridLayout = new GridLayout(0, 5);
+    public DBController db = new DBController("notes.db", this);
+    public CardLayout cardLayout = new CardLayout();
+    GridBagLayout gridBagLayout = new GridBagLayout();
+    GridBagConstraints gridBagConstraints = new GridBagConstraints();
 
     public Home() {
         initComponents();
         myInitComponents();
-
     }
 
     public void myInitComponents() {
+
         contentPanel.setLayout(cardLayout);
-        contentPanel.add(contentNotesPanel, "NewNote");
-        contentPanel.add(contentRemindersPanel, "NewTaskList");
+        contentPanel.add(contentNotesPage, "NewNote");
+        contentPanel.add(contentRemindersPage, "NewTaskList");
+        contentPanel.add(contentEditNotesPage, "EditNote");
 
-        contentNotesPanel.allNotesPanel.setLayout(gridLayout);
+        gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.anchor = GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new Insets(0, 0, 0, 0);
 
-        if (db != null) {
-            db.retrieveAndAddAllNotes(contentNotesPanel.allNotesPanel);
-        } else {
-            JOptionPane.showMessageDialog(null, "Erro ao conectar ao banco de dados");
+        contentNotesPage.allNotesPanel.setLayout(gridBagLayout);
+        contentRemindersPage.allRemindersPanel.setLayout(gridBagLayout);
+        try {
+            db.retrieveAndAddAllNotes(contentNotesPage.allNotesPanel, gridBagLayout, gridBagConstraints);
+            for (Component c : contentNotesPage.allNotesPanel.getComponents()) {
+                gridBagLayout.setConstraints(c, gridBagConstraints);
+                gridBagConstraints.gridy++;
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+
+        try {
+            db.retrieveAndAddAllReminders(contentRemindersPage.allRemindersPanel, gridBagLayout, gridBagConstraints);
+            for (Component c : contentRemindersPage.allRemindersPanel.getComponents()) {
+                gridBagLayout.setConstraints(c, gridBagConstraints);
+                gridBagConstraints.gridy++;
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        } finally {
+            db.close();
         }
     }
 
@@ -38,15 +63,21 @@ public class Home extends javax.swing.JFrame {
      */
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated
+    // <editor-fold defaultstate="collapsed" desc="Generated
+    // <editor-fold defaultstate="collapsed" desc="Generated
+    // <editor-fold defaultstate="collapsed" desc="Generated
+    // <editor-fold defaultstate="collapsed" desc="Generated
     // Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        editNotes1 = new pages.EditNotes();
         sideMenuPanel = new javax.swing.JPanel();
         btnNotes = new javax.swing.JButton();
         btnReminders = new javax.swing.JButton();
         contentPanel = new javax.swing.JPanel();
-        contentNotesPanel = new pages.Notes();
-        contentRemindersPanel = new pages.Reminders();
+        contentNotesPage = new pages.Notes();
+        contentRemindersPage = new pages.Reminders();
+        contentEditNotesPage = new pages.EditNotes();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -90,8 +121,9 @@ public class Home extends javax.swing.JFrame {
 
         contentPanel.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         contentPanel.setLayout(new java.awt.CardLayout());
-        contentPanel.add(contentNotesPanel, "notes");
-        contentPanel.add(contentRemindersPanel, "reminders");
+        contentPanel.add(contentNotesPage, "notes");
+        contentPanel.add(contentRemindersPage, "reminders");
+        contentPanel.add(contentEditNotesPage, "card4");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -102,14 +134,14 @@ public class Home extends javax.swing.JFrame {
                                 .addComponent(sideMenuPanel, javax.swing.GroupLayout.PREFERRED_SIZE,
                                         javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(contentPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 867, Short.MAX_VALUE)
+                                .addComponent(contentPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 442, Short.MAX_VALUE)
                                 .addContainerGap()));
         layout.setVerticalGroup(
                 layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addContainerGap()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(contentPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 488,
+                                        .addComponent(contentPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 274,
                                                 Short.MAX_VALUE)
                                         .addComponent(sideMenuPanel, javax.swing.GroupLayout.DEFAULT_SIZE,
                                                 javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -121,16 +153,16 @@ public class Home extends javax.swing.JFrame {
 
     private void btnNotesActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnNotesActionPerformed
         cardLayout.show(contentPanel, "NewNote");
-        contentNotesPanel.searchNotes.requestFocusInWindow();
-        contentRemindersPanel.searchReminders.setText("Pesquisar lembretes");
-        contentRemindersPanel.searchReminders.setCaretPosition(0);
+        contentNotesPage.searchNotes.requestFocusInWindow();
+        contentRemindersPage.searchReminders.setText("Pesquisar lembretes");
+        contentRemindersPage.searchReminders.setCaretPosition(0);
     }// GEN-LAST:event_btnNotesActionPerformed
 
     private void btnRemindersActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnRemindersActionPerformed
         cardLayout.show(contentPanel, "NewTaskList");
-        contentRemindersPanel.searchReminders.requestFocusInWindow();
-        contentNotesPanel.searchNotes.setText("Pesquisar notas");
-        contentNotesPanel.searchNotes.setCaretPosition(0);
+        contentRemindersPage.searchReminders.requestFocusInWindow();
+        contentNotesPage.searchNotes.setText("Pesquisar notas");
+        contentNotesPage.searchNotes.setCaretPosition(0);
     }// GEN-LAST:event_btnRemindersActionPerformed
 
     /**
@@ -164,9 +196,11 @@ public class Home extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnNotes;
     private javax.swing.JButton btnReminders;
-    private pages.Notes contentNotesPanel;
-    private javax.swing.JPanel contentPanel;
-    private pages.Reminders contentRemindersPanel;
+    private pages.EditNotes contentEditNotesPage;
+    public pages.Notes contentNotesPage;
+    public javax.swing.JPanel contentPanel;
+    private pages.Reminders contentRemindersPage;
+    private pages.EditNotes editNotes1;
     private javax.swing.JPanel sideMenuPanel;
     // End of variables declaration//GEN-END:variables
 }
