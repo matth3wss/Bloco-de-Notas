@@ -5,7 +5,6 @@ import java.sql.Date;
 import java.sql.*;
 import javax.swing.*;
 
-
 import java.awt.*;
 
 public class DBController implements Searchable {
@@ -114,8 +113,8 @@ public class DBController implements Searchable {
             GridBagConstraints gridBagConstraints) throws Exception {
         ResultSet rs = null;
         try {
-            Statement statement = conn.createStatement();
-            rs = statement.executeQuery("SELECT * FROM notes");
+            Statement stm = conn.createStatement();
+            rs = stm.executeQuery("SELECT * FROM notes");
             while (rs.next()) {
                 NotesBlock notesBlock = new NotesBlock();
                 notesBlock.notesBlockId.setText("" + rs.getInt("id"));
@@ -142,10 +141,42 @@ public class DBController implements Searchable {
         }
     }
 
+    public void retrieveAndAddAllNotes2(JPanel allNotesPanel, GridBagLayout gridBagLayout,GridBagConstraints gridBagConstraints, String searchTerm) throws Exception {
+        ResultSet rs = null;
+        try {
+            PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM notes WHERE title LIKE ? OR description LIKE ?");
+            pstmt.setString(1, "%" + searchTerm + "%");
+            pstmt.setString(2, "%" + searchTerm + "%");
+            rs = pstmt.executeQuery();
+            while (rs.next()) {
+                NotesBlock notesBlock = new NotesBlock();
+                notesBlock.notesBlockId.setText("" + rs.getInt("id"));
+                notesBlock.notesBlockTitle.setText(rs.getString("title"));
+                notesBlock.noteBlockDescription.setText(rs.getString("description"));
+                if (rs.getDate("reminderDate") != null) {
+                    notesBlock.notesBlockDateLabel.setText(rs.getDate("reminderDate").toString());
+                }
+                notesBlock.notesBlockPriority.setText("Prioridade: " + rs.getString("priority"));
+                gridBagLayout.setConstraints(notesBlock, gridBagConstraints);
+
+                allNotesPanel.add(notesBlock, gridBagConstraints);
+                gridBagConstraints.gridx++;
+                if (gridBagConstraints.gridx == 5) {
+                    gridBagConstraints.gridx = 0;
+                    gridBagConstraints.gridy++;
+                }
+
+            }
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+    }
+
     @Override
     // Método para carregar os lembretes do banco de dados e colocar na GUI.
     public void retrieveAndAddAllReminders(JPanel allRemindersPanel, GridBagLayout gridBagLayout,
-            GridBagConstraints gridBagConstraints) {
+            GridBagConstraints gridBagConstraints) throws Exception {
 
         ResultSet rs = null;
         try {

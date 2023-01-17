@@ -46,6 +46,7 @@ public class NewNoteFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated
     // <editor-fold defaultstate="collapsed" desc="Generated
     // <editor-fold defaultstate="collapsed" desc="Generated
+    // <editor-fold defaultstate="collapsed" desc="Generated
     // Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -96,7 +97,7 @@ public class NewNoteFrame extends javax.swing.JFrame {
 
         newNoteReminderDate.setDateFormatString("d/MM/y");
 
-        reminderDateLabel.setText("Data: " + sdf.formatSqlDate(newNote.getDateCreated()));
+        reminderDateLabel.setText("Data: " + formatSqlDate(newNote.getDateCreated()));
 
         btnAddNote.setText("Add Nota");
         btnAddNote.addActionListener(new java.awt.event.ActionListener() {
@@ -129,7 +130,7 @@ public class NewNoteFrame extends javax.swing.JFrame {
                                                 .addGroup(layout
                                                         .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                         .addComponent(newNotePriority,
-                                                                javax.swing.GroupLayout.Alignment.TRAILING, 0, 94,
+                                                                javax.swing.GroupLayout.Alignment.TRAILING, 0, 148,
                                                                 Short.MAX_VALUE)
                                                         .addComponent(newNoteReminderDate,
                                                                 javax.swing.GroupLayout.PREFERRED_SIZE, 0,
