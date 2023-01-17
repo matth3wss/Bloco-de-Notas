@@ -104,7 +104,6 @@ public class DBController {
                 // the ResultSet
                 notesBlock.notesBlockTitle.setText(rs.getString("title"));
                 notesBlock.noteBlockDescription.setText(rs.getString("description"));
-                notesBlock.notesBlockDateCreated.setText(rs.getDate("dateCreated").toString());
                 notesBlock.notesBlockReminderDate.setText(rs.getDate("reminderDate").toString());
                 notesBlock.notesBlockPriority.setText("Prioridade: " + rs.getString("priority"));
 

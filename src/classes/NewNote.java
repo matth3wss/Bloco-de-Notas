@@ -1,8 +1,7 @@
 package classes;
 
-import java.sql.Date;
-
 public class NewNote {
+    private int id;
     private String title;
     private String description;
     private java.sql.Date dateCreated;
@@ -13,12 +12,21 @@ public class NewNote {
         this.dateCreated = new java.sql.Date(System.currentTimeMillis());
     }
 
-    public NewNote(String title, String description, java.util.Date reminderDate, String priority) {
+    public NewNote(int id, String title, String description, java.util.Date reminderDate, String priority) {
+        this.id = id;
         this.title = title;
         this.description = description;
         this.dateCreated = new java.sql.Date(System.currentTimeMillis());
         this.reminderDate = null;
         this.priority = priority;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getTitle() {
