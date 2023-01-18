@@ -8,12 +8,18 @@ public class Home extends javax.swing.JFrame {
 
     public DBController db = new DBController("notes.db");
     public CardLayout cardLayout = new CardLayout();
+    NewNote newNote = new NewNote();
+    SqlDateFormatter sdf = new SqlDateFormatter();
+
     GridBagLayout gridBagLayout = new GridBagLayout();
-    GridBagConstraints gridBagConstraints = new GridBagConstraints();
+    GridBagConstraints gridBagConstraints = new GridBagConstraints(0, 0, 1, 1, 1.0, 1.0, GridBagConstraints.NORTHWEST,
+            GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0);
 
     public Home() {
         initComponents();
         myInitComponents();
+        repaintNotes();
+        repaintReminders();
     }
 
     public void myInitComponents() {
@@ -23,17 +29,12 @@ public class Home extends javax.swing.JFrame {
         contentPanel.add(contentRemindersPage, "NewTaskList");
         contentPanel.add(contentEditNotesPage, "EditNote");
 
-        gridBagConstraints.fill = GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.weighty = 1.0;
-        gridBagConstraints.anchor = GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new Insets(0, 0, 0, 0);
+    }
 
+    public void repaintNotes() {
         contentNotesPage.allNotesPanel.setLayout(gridBagLayout);
-        contentRemindersPage.allRemindersPanel.setLayout(gridBagLayout);
         try {
+            contentNotesPage.allNotesPanel.removeAll();
             db.retrieveAndAddAllNotes(contentNotesPage.allNotesPanel, gridBagLayout, gridBagConstraints);
             for (Component c : contentNotesPage.allNotesPanel.getComponents()) {
                 gridBagLayout.setConstraints(c, gridBagConstraints);
@@ -42,8 +43,12 @@ public class Home extends javax.swing.JFrame {
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
+    }
 
+    public void repaintReminders() {
+        contentRemindersPage.allRemindersPanel.setLayout(gridBagLayout);
         try {
+            contentRemindersPage.allRemindersPanel.removeAll();
             db.retrieveAndAddAllReminders(contentRemindersPage.allRemindersPanel, gridBagLayout, gridBagConstraints);
             for (Component c : contentRemindersPage.allRemindersPanel.getComponents()) {
                 gridBagLayout.setConstraints(c, gridBagConstraints);
@@ -51,8 +56,6 @@ public class Home extends javax.swing.JFrame {
             }
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
-        } finally {
-            db.close();
         }
     }
 
@@ -67,9 +70,12 @@ public class Home extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated
     // <editor-fold defaultstate="collapsed" desc="Generated
     // <editor-fold defaultstate="collapsed" desc="Generated
-    // Code">//GEN-BEGIN:initComponents
+    // <editor-fold defaultstate="collapsed" desc="Generated
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        tabs = new javax.swing.JTabbedPane();
+        homeTab = new javax.swing.JPanel();
         sideMenuPanel = new javax.swing.JPanel();
         btnNotes = new javax.swing.JButton();
         btnReminders = new javax.swing.JButton();
@@ -77,8 +83,23 @@ public class Home extends javax.swing.JFrame {
         contentNotesPage = new pages.Notes();
         contentRemindersPage = new pages.Reminders();
         contentEditNotesPage = new pages.EditNotes();
+        newNoteTab = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        newNoteDescription = new javax.swing.JTextArea();
+        newNoteTitle = new javax.swing.JTextField();
+        newNotePriority = new javax.swing.JComboBox<>();
+        newNoteReminderDate = new com.toedter.calendar.JDateChooser();
+        reminderDateLabel = new javax.swing.JLabel();
+        btnAddNote = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+
+        tabs.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                tabsStateChanged(evt);
+            }
+        });
 
         sideMenuPanel.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
@@ -99,56 +120,214 @@ public class Home extends javax.swing.JFrame {
         javax.swing.GroupLayout sideMenuPanelLayout = new javax.swing.GroupLayout(sideMenuPanel);
         sideMenuPanel.setLayout(sideMenuPanelLayout);
         sideMenuPanelLayout.setHorizontalGroup(
-                sideMenuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(sideMenuPanelLayout.createSequentialGroup()
-                                .addContainerGap()
-                                .addGroup(sideMenuPanelLayout
-                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(btnNotes, javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(btnReminders, javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addContainerGap()));
+            sideMenuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(sideMenuPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(sideMenuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnNotes, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnReminders, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
+        );
         sideMenuPanelLayout.setVerticalGroup(
-                sideMenuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(sideMenuPanelLayout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(btnNotes)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnReminders)
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
+            sideMenuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(sideMenuPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btnNotes)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnReminders)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
-        contentPanel.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         contentPanel.setLayout(new java.awt.CardLayout());
         contentPanel.add(contentNotesPage, "notes");
         contentPanel.add(contentRemindersPage, "reminders");
         contentPanel.add(contentEditNotesPage, "card4");
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(sideMenuPanel, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(contentPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 442, Short.MAX_VALUE)
-                                .addContainerGap()));
-        layout.setVerticalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(contentPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 274,
-                                                Short.MAX_VALUE)
-                                        .addComponent(sideMenuPanel, javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addContainerGap()));
+        javax.swing.GroupLayout homeTabLayout = new javax.swing.GroupLayout(homeTab);
+        homeTab.setLayout(homeTabLayout);
+        homeTabLayout.setHorizontalGroup(
+            homeTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(homeTabLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(sideMenuPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(contentPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 539, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        homeTabLayout.setVerticalGroup(
+            homeTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(homeTabLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(homeTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(sideMenuPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(contentPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 324, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+
+        tabs.addTab("Home", homeTab);
+
+        newNoteDescription.setColumns(20);
+        newNoteDescription.setRows(5);
+        newNoteDescription.setText("Descrição");
+        newNoteDescription.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                newNoteDescriptionMousePressed(evt);
+            }
+        });
+        newNoteDescription.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                newNoteDescriptionKeyTyped(evt);
+            }
+        });
+        jScrollPane1.setViewportView(newNoteDescription);
+
+        newNoteTitle.setText("Título");
+        newNoteTitle.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                newNoteTitleMousePressed(evt);
+            }
+        });
+        newNoteTitle.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                newNoteTitleKeyPressed(evt);
+            }
+        });
+
+        newNotePriority.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Prioridade", "Urgente", "Alta", "Média", "Baixa", "Opcional", "Trivial" }));
+        newNotePriority.setToolTipText("Prioridade");
+        newNotePriority.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+
+        newNoteReminderDate.setDateFormatString("d/MM/y");
+
+        reminderDateLabel.setText("Data de criação: " + sdf.formatSqlDate(newNote.getDateCreated()));
+
+        btnAddNote.setText("Add Nota");
+        btnAddNote.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddNoteActionPerformed(evt);
+            }
+        });
+
+        jLabel1.setText("Lembrar-me");
+
+        javax.swing.GroupLayout newNoteTabLayout = new javax.swing.GroupLayout(newNoteTab);
+        newNoteTab.setLayout(newNoteTabLayout);
+        newNoteTabLayout.setHorizontalGroup(
+            newNoteTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(newNoteTabLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(newNoteTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1)
+                    .addGroup(newNoteTabLayout.createSequentialGroup()
+                        .addGroup(newNoteTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(newNoteTabLayout.createSequentialGroup()
+                                .addComponent(newNoteTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel1))
+                            .addComponent(reminderDateLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(newNoteTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnAddNote, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(newNoteTabLayout.createSequentialGroup()
+                                .addComponent(newNoteReminderDate, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(newNotePriority, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap())
+        );
+        newNoteTabLayout.setVerticalGroup(
+            newNoteTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(newNoteTabLayout.createSequentialGroup()
+                .addGap(12, 12, 12)
+                .addGroup(newNoteTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(newNotePriority, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(newNoteReminderDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(newNoteTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(newNoteTitle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(newNoteTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(reminderDateLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnAddNote))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 255, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        jScrollPane1.getVerticalScrollBar().setUnitIncrement(1000);
+
+        tabs.addTab("Nova Nota", newNoteTab);
+
+        getContentPane().add(tabs, java.awt.BorderLayout.CENTER);
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void newNoteTitleMousePressed(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_newNoteTitleMousePressed
+        if (newNoteTitle.getText().equals("Título")) {
+            newNoteTitle.setCaretPosition(0);
+        }
+    }// GEN-LAST:event_newNoteTitleMousePressed
+
+    private void newNoteDescriptionMousePressed(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_newNoteDescriptionMousePressed
+        if (newNoteDescription.getText().equals("Descrição")) {
+            newNoteDescription.setCaretPosition(0);
+        }
+
+    }// GEN-LAST:event_newNoteDescriptionMousePressed
+
+    private void tabsStateChanged(javax.swing.event.ChangeEvent evt) {// GEN-FIRST:event_tabsStateChanged
+        switch (tabs.getSelectedIndex()) {
+            case 0 -> {
+                newNoteTitle.setText("Título");
+                newNoteDescription.setText("Descrição");
+            }
+            case 1 -> {
+                if (newNoteTitle.getText().equals("Título")) {
+                    newNoteTitle.setForeground(Color.LIGHT_GRAY);
+                    newNoteTitle.setCaretPosition(0);
+                }
+                if (newNoteDescription.getText().equals("Descrição")) {
+                    newNoteDescription.setForeground(Color.LIGHT_GRAY);
+
+                }
+            }
+        }
+
+    }// GEN-LAST:event_tabsStateChanged
+
+    private void newNoteTitleKeyPressed(java.awt.event.KeyEvent evt) {// GEN-FIRST:event_newNoteTitleKeyPressed
+        if (newNoteTitle.getText().equals("Título")) {
+            newNoteTitle.setText("");
+        }
+        newNoteTitle.setForeground(Color.BLACK);
+    }// GEN-LAST:event_newNoteTitleKeyPressed
+
+    private void newNoteDescriptionKeyTyped(java.awt.event.KeyEvent evt) {// GEN-FIRST:event_newNoteDescriptionKeyTyped
+        if (newNoteDescription.getText().equals("Descrição")) {
+            newNoteDescription.setText("");
+        }
+        newNoteDescription.setForeground(Color.BLACK);
+    }// GEN-LAST:event_newNoteDescriptionKeyTyped
+
+    private void btnAddNoteActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnAddNoteActionPerformed
+        newNote.setTitle(newNoteTitle.getText());
+        newNote.setDescription(newNoteDescription.getText());
+        newNote.setReminderDate(newNoteReminderDate.getDate());
+        if (newNoteReminderDate.getDate() != null) {
+            newNote.setReminderDate(newNoteReminderDate.getDate());
+        }
+        newNote.setPriority(newNotePriority.getSelectedItem().toString());
+
+        try {
+            db.addNote(newNote);
+            repaintNotes();
+            ;
+            repaintReminders();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+    }// GEN-LAST:event_btnAddNoteActionPerformed
 
     private void btnNotesActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnNotesActionPerformed
         cardLayout.show(contentPanel, "NewNote");
@@ -193,12 +372,23 @@ public class Home extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAddNote;
     private javax.swing.JButton btnNotes;
     private javax.swing.JButton btnReminders;
     private pages.EditNotes contentEditNotesPage;
     public pages.Notes contentNotesPage;
-    public javax.swing.JPanel contentPanel;
+    private javax.swing.JPanel contentPanel;
     private pages.Reminders contentRemindersPage;
+    private javax.swing.JPanel homeTab;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextArea newNoteDescription;
+    private javax.swing.JComboBox<String> newNotePriority;
+    private com.toedter.calendar.JDateChooser newNoteReminderDate;
+    private javax.swing.JPanel newNoteTab;
+    private javax.swing.JTextField newNoteTitle;
+    private javax.swing.JLabel reminderDateLabel;
     private javax.swing.JPanel sideMenuPanel;
+    private javax.swing.JTabbedPane tabs;
     // End of variables declaration//GEN-END:variables
 }

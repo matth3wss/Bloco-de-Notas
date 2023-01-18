@@ -1,6 +1,6 @@
 package pages;
 
-import frames.NewNoteFrame;
+//import frames.NewNoteFrame;
 import java.awt.*;
 import javax.swing.JFrame;
 
@@ -91,8 +91,8 @@ public class Reminders extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnNewReminderMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_btnNewReminderMouseClicked
-        JFrame newNoteFrame = new NewNoteFrame();
-        newNoteFrame.setVisible(true);
+//        JFrame newNoteFrame = new NewNoteFrame();
+//        newNoteFrame.setVisible(true);
     }// GEN-LAST:event_btnNewReminderMouseClicked
 
     private void searchRemindersKeyPressed(java.awt.event.KeyEvent evt) {// GEN-FIRST:event_searchRemindersKeyPressed
