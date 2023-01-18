@@ -122,7 +122,7 @@ public class DBController implements Searchable {
                 notesBlock.notesBlockTitle.setText(rs.getString("title"));
                 notesBlock.noteBlockDescription.setText(rs.getString("description"));
                 if (rs.getDate("reminderDate") != null) {
-                    notesBlock.notesBlockDateLabel.setText(rs.getDate("reminderDate").toString());
+                    notesBlock.notesBlockReminderDateLabel.setText(rs.getDate("reminderDate").toString());
                 }
                 notesBlock.notesBlockPriority.setText("Prioridade: " + rs.getString("priority"));
                 gridBagLayout.setConstraints(notesBlock, gridBagConstraints);
@@ -154,7 +154,7 @@ public class DBController implements Searchable {
                 notesBlock.notesBlockTitle.setText(rs.getString("title"));
                 notesBlock.noteBlockDescription.setText(rs.getString("description"));
                 if (rs.getDate("reminderDate") != null) {
-                    notesBlock.notesBlockDateLabel.setText(rs.getDate("reminderDate").toString());
+                    notesBlock.notesBlockReminderDateLabel.setText(rs.getDate("reminderDate").toString());
                 }
                 notesBlock.notesBlockPriority.setText("Prioridade: " + rs.getString("priority"));
                 gridBagLayout.setConstraints(notesBlock, gridBagConstraints);
