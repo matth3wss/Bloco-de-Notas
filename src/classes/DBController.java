@@ -6,9 +6,11 @@ import java.sql.*;
 import javax.swing.*;
 
 import java.awt.*;
+import main.Home;
 
 public class DBController implements Searchable {
     private Connection conn;
+    
 
     // Construtor que faz a conexão com o banco de dados, você passa
     // o nome do arquivo como parâmetro e ele a realiza.
@@ -107,16 +109,16 @@ public class DBController implements Searchable {
         }
         return rs;
     }
-
+@Override
     // Método para carregar as notas do banco de dados e colocar na GUI.
     public void retrieveAndAddAllNotes(JPanel allNotesPanel, GridBagLayout gridBagLayout,
-            GridBagConstraints gridBagConstraints) throws Exception {
+            GridBagConstraints gridBagConstraints, Home home) throws Exception {
         ResultSet rs = null;
         try {
             Statement stm = conn.createStatement();
             rs = stm.executeQuery("SELECT * FROM notes");
             while (rs.next()) {
-                NotesBlock notesBlock = new NotesBlock();
+                NotesBlock notesBlock = new NotesBlock(home);
                 notesBlock.notesBlockId.setText("" + rs.getInt("id"));
 
                 notesBlock.notesBlockTitle.setText(rs.getString("title"));
@@ -141,7 +143,8 @@ public class DBController implements Searchable {
         }
     }
 
-    public void retrieveAndAddAllNotes2(JPanel allNotesPanel, GridBagLayout gridBagLayout,GridBagConstraints gridBagConstraints, String searchTerm) throws Exception {
+    public void retrieveAndAddAllNotes2(JPanel allNotesPanel, GridBagLayout gridBagLayout, 
+            GridBagConstraints gridBagConstraints, String searchTerm, Home home) throws Exception {
         ResultSet rs = null;
         try {
             PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM notes WHERE title LIKE ? OR description LIKE ?");
@@ -149,7 +152,7 @@ public class DBController implements Searchable {
             pstmt.setString(2, "%" + searchTerm + "%");
             rs = pstmt.executeQuery();
             while (rs.next()) {
-                NotesBlock notesBlock = new NotesBlock();
+                NotesBlock notesBlock = new NotesBlock(home);
                 notesBlock.notesBlockId.setText("" + rs.getInt("id"));
                 notesBlock.notesBlockTitle.setText(rs.getString("title"));
                 notesBlock.noteBlockDescription.setText(rs.getString("description"));
@@ -210,8 +213,7 @@ public class DBController implements Searchable {
         }
     }
 
-    public void updateNotes(int id, String newTitle, String newDescription, String newPriority,
-            java.sql.Date newReminderDate) {
+    public void updateNotes(int id, String newTitle, String newDescription, String newPriority, java.sql.Date newReminderDate) {
         String sql = "UPDATE notes SET title = ?, description = ?, priority = ?, reminderDate = ? WHERE id = ?";
         try {
             PreparedStatement pstmt = conn.prepareStatement(sql);
