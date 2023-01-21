@@ -1,14 +1,11 @@
 package pages;
-
-//import frames.NewNoteFrame;
+import main.Home;
 import java.awt.*;
-import javax.swing.JFrame;
 
 public class Reminders extends javax.swing.JPanel {
-    /**
-     * Creates new form page2Panel
-     */
-    public Reminders() {
+    Home home;
+    public Reminders(Home home) {
+        this.home = home;
         initComponents();
         myInitComponents();
     }

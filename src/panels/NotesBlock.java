@@ -3,7 +3,6 @@ package panels;
 import java.awt.event.MouseEvent;
 import main.Home;
 import pages.EditNotes;
-import java.awt.Component;
 
 /**
  *
@@ -22,7 +21,7 @@ public class NotesBlock extends javax.swing.JPanel {
     }
 
     private void showPopUp(MouseEvent e) {
-        popupMenu.show(btnEditNote, e.getX(), e.getY());
+        
     }
 
     /**
@@ -39,10 +38,10 @@ public class NotesBlock extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated
     // <editor-fold defaultstate="collapsed" desc="Generated
     // <editor-fold defaultstate="collapsed" desc="Generated
-    // Code">//GEN-BEGIN:initComponents
+    // <editor-fold defaultstate="collapsed" desc="Generated
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        notesBlockId = new javax.swing.JLabel();
         popupMenu = new javax.swing.JPopupMenu();
         editOption = new javax.swing.JMenuItem();
         deleteOption = new javax.swing.JMenuItem();
@@ -51,9 +50,7 @@ public class NotesBlock extends javax.swing.JPanel {
         notesBlockReminderDateLabel = new javax.swing.JLabel();
         notesBlockPriority = new javax.swing.JLabel();
         btnEditNote = new javax.swing.JButton();
-
-        notesBlockId.setText("Id");
-        notesBlockId.setOpaque(true);
+        notesBlockId = new javax.swing.JLabel();
 
         editOption.setText("Editar");
         editOption.addActionListener(new java.awt.event.ActionListener() {
@@ -92,60 +89,56 @@ public class NotesBlock extends javax.swing.JPanel {
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 btnEditNoteMousePressed(evt);
             }
-
             public void mouseReleased(java.awt.event.MouseEvent evt) {
                 btnEditNoteMouseReleased(evt);
             }
         });
 
+        notesBlockId.setText("Id");
+        notesBlockId.setOpaque(true);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING,
-                                                layout.createSequentialGroup()
-                                                        .addGap(0, 0, Short.MAX_VALUE)
-                                                        .addComponent(notesBlockPriority))
-                                        .addGroup(layout.createSequentialGroup()
-                                                .addComponent(notesBlockReminderDateLabel,
-                                                        javax.swing.GroupLayout.PREFERRED_SIZE, 100,
-                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 79,
-                                                        Short.MAX_VALUE)
-                                                .addComponent(btnEditNote, javax.swing.GroupLayout.PREFERRED_SIZE, 18,
-                                                        javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGroup(layout.createSequentialGroup()
-                                                .addGroup(layout
-                                                        .createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                        .addComponent(notesBlockTitle,
-                                                                javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addComponent(noteBlockDescription,
-                                                                javax.swing.GroupLayout.DEFAULT_SIZE, 195,
-                                                                Short.MAX_VALUE))
-                                                .addGap(2, 2, 2)))
-                                .addContainerGap()));
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(notesBlockPriority))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(notesBlockReminderDateLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 72, Short.MAX_VALUE)
+                        .addComponent(notesBlockId)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnEditNote, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(notesBlockTitle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(noteBlockDescription))
+                        .addGap(2, 2, 2)))
+                .addContainerGap())
+        );
         layout.setVerticalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(notesBlockTitle, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(notesBlockPriority))
-                                .addGap(8, 8, 8)
-                                .addComponent(noteBlockDescription, javax.swing.GroupLayout.PREFERRED_SIZE, 113,
-                                        javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(notesBlockReminderDateLabel)
-                                        .addComponent(btnEditNote, javax.swing.GroupLayout.PREFERRED_SIZE, 20,
-                                                Short.MAX_VALUE))));
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(notesBlockTitle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(notesBlockPriority))
+                .addGap(2, 2, 2)
+                .addComponent(noteBlockDescription, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnEditNote, javax.swing.GroupLayout.PREFERRED_SIZE, 20, Short.MAX_VALUE)
+                        .addComponent(notesBlockId))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(notesBlockReminderDateLabel)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
     }// </editor-fold>//GEN-END:initComponents
 
     private void deleteOptionActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_deleteOptionActionPerformed
@@ -153,18 +146,21 @@ public class NotesBlock extends javax.swing.JPanel {
     }// GEN-LAST:event_deleteOptionActionPerformed
 
     private void editOptionActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_editOptionActionPerformed
-        // id = this.getId();
-        // int index = home.tabs.indexOfTab("Editar Nota");
-        // home.tabs.setSelectedIndex(index);
+        id = Integer.parseInt(notesBlockId.getText());
+
+        int index = home.tabs.indexOfTab("Editar Nota");
+        home.tabs.setSelectedIndex(index);
+        // home.db.retrieveAndSetNote(id, home);
+        home.db.retrieveAndSetNote(id, home);
 
     }// GEN-LAST:event_editOptionActionPerformed
 
     private void btnEditNoteMousePressed(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_btnEditNoteMousePressed
-        showPopUp(evt);
+       popupMenu.show(btnEditNote, evt.getX(), evt.getY());
     }// GEN-LAST:event_btnEditNoteMousePressed
 
     private void btnEditNoteMouseReleased(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_btnEditNoteMouseReleased
-        showPopUp(evt);
+        popupMenu.show(btnEditNote, evt.getX(), evt.getY());
     }// GEN-LAST:event_btnEditNoteMouseReleased
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

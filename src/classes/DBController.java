@@ -10,7 +10,6 @@ import main.Home;
 
 public class DBController implements Searchable {
     private Connection conn;
-    
 
     // Construtor que faz a conexão com o banco de dados, você passa
     // o nome do arquivo como parâmetro e ele a realiza.
@@ -85,6 +84,38 @@ public class DBController implements Searchable {
         return rs;
     }
 
+    public void retrieveAndSetNote(int id, Home home) {
+        String sql = "SELECT * FROM notes WHERE id = ?";
+        ResultSet rs = null;
+        PreparedStatement pstmt = null;
+        try {
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, id);
+            rs = pstmt.executeQuery();
+            if (rs.next()) {
+
+                if (rs.getString("title") != null) {
+                    home.noteTitle.setText(rs.getString("title"));
+                } else {
+                    home.noteTitle.setText("Título");
+                }
+
+                if (rs.getString("description") != null) {
+                    home.noteDescription.setText(rs.getString("description"));
+                } else {
+                    home.noteDescription.setText("Descrição");
+                }
+
+                home.notePriority.setSelectedItem(rs.getString("priority"));
+                home.noteReminderDate.setDate(rs.getDate("reminderDate"));
+            } else {
+                JOptionPane.showMessageDialog(null, "Note not found!");
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+    }
+
     @Override
     // Método para pesquisar lembretes no banco de dados.
     public ResultSet searchReminders(String query) {
@@ -109,7 +140,8 @@ public class DBController implements Searchable {
         }
         return rs;
     }
-@Override
+
+    @Override
     // Método para carregar as notas do banco de dados e colocar na GUI.
     public void retrieveAndAddAllNotes(JPanel allNotesPanel, GridBagLayout gridBagLayout,
             GridBagConstraints gridBagConstraints, Home home) throws Exception {
@@ -143,11 +175,12 @@ public class DBController implements Searchable {
         }
     }
 
-    public void retrieveAndAddAllNotes2(JPanel allNotesPanel, GridBagLayout gridBagLayout, 
+    public void retrieveAndAddAllNotes2(JPanel allNotesPanel, GridBagLayout gridBagLayout,
             GridBagConstraints gridBagConstraints, String searchTerm, Home home) throws Exception {
         ResultSet rs = null;
         try {
-            PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM notes WHERE title LIKE ? OR description LIKE ?");
+            PreparedStatement pstmt = conn
+                    .prepareStatement("SELECT * FROM notes WHERE title LIKE ? OR description LIKE ?");
             pstmt.setString(1, "%" + searchTerm + "%");
             pstmt.setString(2, "%" + searchTerm + "%");
             rs = pstmt.executeQuery();
@@ -213,7 +246,8 @@ public class DBController implements Searchable {
         }
     }
 
-    public void updateNotes(int id, String newTitle, String newDescription, String newPriority, java.sql.Date newReminderDate) {
+    public void updateNotes(int id, String newTitle, String newDescription, String newPriority,
+            java.sql.Date newReminderDate) {
         String sql = "UPDATE notes SET title = ?, description = ?, priority = ?, reminderDate = ? WHERE id = ?";
         try {
             PreparedStatement pstmt = conn.prepareStatement(sql);
