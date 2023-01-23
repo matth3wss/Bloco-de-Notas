@@ -4,11 +4,17 @@ import java.awt.*;
 
 public class Reminders extends javax.swing.JPanel {
     Home home;
-    public Reminders(Home home) {
-        this.home = home;
+
+        public Reminders() {
         initComponents();
         myInitComponents();
     }
+        
+        public Reminders(Home home){
+            this.home = home;
+            initComponents();
+            myInitComponents();
+        }
 
     public void myInitComponents() {
     }
@@ -25,7 +31,7 @@ public class Reminders extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated
     // <editor-fold defaultstate="collapsed" desc="Generated
     // <editor-fold defaultstate="collapsed" desc="Generated
-    // Code">//GEN-BEGIN:initComponents
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         searchReminders = new javax.swing.JTextField();
@@ -52,40 +58,47 @@ public class Reminders extends javax.swing.JPanel {
                 btnNewReminderMouseClicked(evt);
             }
         });
+        btnNewReminder.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                btnNewReminderKeyTyped(evt);
+            }
+        });
 
-        allRemindersPanel.setBorder(
-                javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder("")));
+        allRemindersPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder("")));
         allRemindersPanel.setLayout(new java.awt.GridBagLayout());
         scrollPanelAllReminders.setViewportView(allRemindersPanel);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(searchReminders)
-                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING,
-                                                layout.createSequentialGroup()
-                                                        .addGap(0, 0, Short.MAX_VALUE)
-                                                        .addComponent(btnNewReminder))
-                                        .addComponent(scrollPanelAllReminders, javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                244, Short.MAX_VALUE))
-                                .addContainerGap()));
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(searchReminders)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnNewReminder))
+                    .addComponent(scrollPanelAllReminders, javax.swing.GroupLayout.DEFAULT_SIZE, 244, Short.MAX_VALUE))
+                .addContainerGap())
+        );
         layout.setVerticalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(searchReminders, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(scrollPanelAllReminders, javax.swing.GroupLayout.DEFAULT_SIZE, 186,
-                                        Short.MAX_VALUE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnNewReminder)
-                                .addContainerGap()));
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(searchReminders, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(scrollPanelAllReminders, javax.swing.GroupLayout.DEFAULT_SIZE, 186, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnNewReminder)
+                .addContainerGap())
+        );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnNewReminderKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnNewReminderKeyTyped
+       searchReminders.getText();
+       
+    }//GEN-LAST:event_btnNewReminderKeyTyped
 
     private void btnNewReminderMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_btnNewReminderMouseClicked
 //        JFrame newNoteFrame = new NewNoteFrame();
