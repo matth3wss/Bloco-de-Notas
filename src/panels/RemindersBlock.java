@@ -53,6 +53,7 @@ public class RemindersBlock extends javax.swing.JPanel {
         remindersBlockId.setText("Id");
         remindersBlockId.setOpaque(true);
 
+        remindersBlockDescription.setEditable(false);
         remindersBlockDescription.setColumns(20);
         remindersBlockDescription.setRows(5);
         jScrollPane.setViewportView(remindersBlockDescription);

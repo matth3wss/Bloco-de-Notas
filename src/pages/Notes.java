@@ -15,8 +15,8 @@ public class Notes extends javax.swing.JPanel {
         initComponents();
         myInitComponents();
     }
-    
-    public Notes(Home home){
+
+    public Notes(Home home) {
         this.home = home;
         initComponents();
         myInitComponents();
@@ -47,6 +47,8 @@ public class Notes extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated
     // <editor-fold defaultstate="collapsed" desc="Generated
     // <editor-fold defaultstate="collapsed" desc="Generated
+    // <editor-fold defaultstate="collapsed" desc="Generated
+    // <editor-fold defaultstate="collapsed" desc="Generated
     // Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -60,6 +62,11 @@ public class Notes extends javax.swing.JPanel {
         searchNotes.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusGained(java.awt.event.FocusEvent evt) {
                 searchNotesFocusGained(evt);
+            }
+        });
+        searchNotes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                searchNotesMousePressed(evt);
             }
         });
         searchNotes.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -108,11 +115,14 @@ public class Notes extends javax.swing.JPanel {
                                 .addContainerGap()));
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnRefreshActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnRefreshActionPerformed
-    }// GEN-LAST:event_btnRefreshActionPerformed
+    private void searchNotesMousePressed(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_searchNotesMousePressed
+        if (searchNotes.getText().equals("Pesquisar notas")) {
+            searchNotes.setCaretPosition(0);
+        }
+    }// GEN-LAST:event_searchNotesMousePressed
 
     private void btnNewNoteMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_btnNewNoteMouseClicked
-//        home.tabs.setSelectedIndex(1);
+        home.tabs.setSelectedIndex(1);
     }// GEN-LAST:event_btnNewNoteMouseClicked
 
     private void searchNotesKeyPressed(java.awt.event.KeyEvent evt) {// GEN-FIRST:event_searchNotesKeyPressed
@@ -120,8 +130,9 @@ public class Notes extends javax.swing.JPanel {
             searchNotes.setText("");
         }
         searchNotes.setForeground(Color.BLACK);
-//        home.contentNotesPage.
-//        home.db.searchAndAddAllNotes(contentNotesPage.allNotesPanel, gridBagLayout, gridBagConstraints, this, searchNotes.getText());
+        // home.contentNotesPage.
+        // home.db.searchAndAddAllNotes(contentNotesPage.allNotesPanel, gridBagLayout,
+        // gridBagConstraints, this, searchNotes.getText());
 
     }// GEN-LAST:event_searchNotesKeyPressed
 
