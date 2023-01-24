@@ -1,12 +1,14 @@
-package test;
+package classes;
 
-import classes.NewNote;
 import panels.*;
+import java.sql.Date;
 import java.sql.*;
 import javax.swing.*;
-import java.sql.Date;
 
-public class DBController {
+import java.awt.*;
+import main.Home;
+
+public class DBController implements Searchable {
     private Connection conn;
 
     // Construtor que faz a conexão com o banco de dados, você passa
@@ -26,7 +28,7 @@ public class DBController {
     public void addNote(NewNote note) {
         // A string sql é um argumento passado para o gerenciador de banco de dados
         // para que ele saiba onde inserir os dados no banco.
-        String sql = "INSERT INTO lists (title, description, dateCreated, reminderDate, priority) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO notes (title, description, dateCreated, reminderDate, priority) VALUES (?, ?, ?, ?, ?)";
 
         try {
             // PreparedStatement faz uma preparação para a inserção dos dados
@@ -47,6 +49,8 @@ public class DBController {
             }
             if (!note.getPriority().equals("Prioridade")) {
                 pstmt.setString(5, note.getPriority());
+            } else {
+                pstmt.setString(5, null);
             }
             // Apos a preparação, o método executeUpdate() executa a inserção no banco.
             pstmt.executeUpdate();
@@ -56,61 +60,224 @@ public class DBController {
         }
     }
 
+    @Override
     // Método para pesquisar notas no banco de dados.
     public ResultSet searchNotes(String query) {
-        // Nessa string sql, eu quero selecionar todas as colunas da tabela lists
+        // Nessa string sql, eu quero selecionar todas as colunas da tabela notes
         // onde o título ou a descrição contenham a string passada no construtor.
-        String sql = "SELECT * FROM lists WHERE title LIKE ? OR description LIKE ?";
+        String sql = "SELECT * FROM notes WHERE title LIKE ? OR description LIKE ?";
         // ResultSet cria um objeto que salvas as linhas onde os dados pesquisado se
         // encontram
         ResultSet rs = null;
         try {
             // Nesse PreparedStatement eu passos os atributos onde quero pesquisar no banco.
             PreparedStatement pstmt = conn.prepareStatement(sql);
-
             // As % servem para fazer buscas parciais, ou seja,
             // vai retornar todas as notas que possuam a palavra pesquisada.
-
             pstmt.setString(1, "%" + query + "%");
             pstmt.setString(2, "%" + query + "%");
 
             // Aqui executamos uma pesquisa no banco usando o "pstmt" e salvamos
             // o resultado na variável "rs".
             rs = pstmt.executeQuery();
-
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
         return rs;
     }
 
-    // Método para carregar as notas do banco de dados
-    public void retrieveAndAddAllNotes(JPanel allNotesPanel) {
-        // Create a new ResultSet object
+    @Override
+    // Método para pesquisar lembretes no banco de dados.
+    public ResultSet searchReminders(String query) {
+        // Nessa string sql, eu quero selecionar todas as colunas da tabela notes
+        // onde o título ou a descrição contenham a string passada no construtor.
+        String sql = "SELECT * FROM notes WHERE title LIKE ? OR description LIKE ?";
+        // ResultSet cria um objeto que salvas as linhas onde os dados pesquisado se
+        // encontram
         ResultSet rs = null;
-
         try {
-            // Create a new statement
-            Statement statement = conn.createStatement();
-            // Execute the SELECT query to retrieve all records from the lists table
-            rs = statement.executeQuery("SELECT * FROM lists");
+            // Nesse PreparedStatement eu passos os atributos onde quero pesquisar no banco.
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            // As % servem para fazer buscas parciais, ou seja,
+            // vai retornar todas as notas que possuam a palavra pesquisada.
+            pstmt.setString(1, "%" + query + "%");
 
-            // Iterate through the ResultSet object
+            // Aqui executamos uma pesquisa no banco usando o "pstmt" e salvamos
+            // o resultado na variável "rs".
+            rs = pstmt.executeQuery();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+        return rs;
+    }
+
+    public void retrieveAndSetNote(int id, Home home) {
+        String sql = "SELECT * FROM notes WHERE id = ?";
+        ResultSet rs = null;
+        PreparedStatement pstmt = null;
+        try {
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, id);
+            rs = pstmt.executeQuery();
+            if (rs.next()) {
+
+                if (rs.getString("title") != null) {
+                    home.noteTitle.setText(rs.getString("title"));
+                } else {
+                    home.noteTitle.setText("Título");
+                }
+
+                if (rs.getString("description") != null) {
+                    home.noteDescription.setText(rs.getString("description"));
+                } else {
+                    home.noteDescription.setText("Descrição");
+                }
+
+                home.noteId.setText(String.valueOf(rs.getInt("id")));
+                home.notePriority.setSelectedItem(rs.getString("priority"));
+                home.noteReminderDate.setDate(rs.getDate("reminderDate"));
+            } else {
+                JOptionPane.showMessageDialog(null, "Note not found!");
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+    }
+
+    @Override
+    // Método para carregar as notas do banco de dados e colocar na GUI.
+    public void retrieveAndAddAllNotes(JPanel allNotesPanel, GridBagLayout gridBagLayout,
+            GridBagConstraints gridBagConstraints, Home home) throws Exception {
+        ResultSet rs = null;
+        try {
+            Statement stm = conn.createStatement();
+            rs = stm.executeQuery("SELECT * FROM notes");
             while (rs.next()) {
-                // Create a new instance of the NotesBlock class
-                NotesBlock notesBlock = new NotesBlock();
+                NotesBlock notesBlock = new NotesBlock(home);
+                notesBlock.notesBlockId.setText("" + rs.getInt("id"));
+
+                notesBlock.notesBlockTitle.setText(rs.getString("title"));
+                notesBlock.noteBlockDescription.setText(rs.getString("description"));
+
+                if (rs.getDate("reminderDate") != null) {
+                    notesBlock.notesBlockReminderDateLabel.setText(rs.getDate("reminderDate").toString());
+                } else {
+                    notesBlock.notesBlockReminderDateLabel.setText("");
+                }
+
+                if (rs.getString("priority") != null) {
+                    notesBlock.notesBlockPriority.setText("Prioridade: " + rs.getString("priority"));
+                } else {
+                    notesBlock.notesBlockPriority.setText("");
+                }
+                gridBagLayout.setConstraints(notesBlock, gridBagConstraints);
+
+                allNotesPanel.add(notesBlock, gridBagConstraints);
+                gridBagConstraints.gridx++;
+                if (gridBagConstraints.gridx == 5) {
+                    gridBagConstraints.gridx = 0;
+                    gridBagConstraints.gridy++;
+                }
+
+            }
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+    }
+
+    public void searchAndAddAllNotes(JPanel allNotesPanel, GridBagLayout gridBagLayout,
+            GridBagConstraints gridBagConstraints, String searchTerm, Home home) throws Exception {
+        ResultSet rs = null;
+        try {
+            PreparedStatement pstmt = conn
+                    .prepareStatement("SELECT * FROM notes WHERE title LIKE ? OR description LIKE ?");
+            pstmt.setString(1, "%" + searchTerm + "%");
+            pstmt.setString(2, "%" + searchTerm + "%");
+            rs = pstmt.executeQuery();
+            while (rs.next()) {
+                NotesBlock notesBlock = new NotesBlock(home);
+                notesBlock.notesBlockId.setText(String.valueOf(rs.getInt("id")));
+                notesBlock.notesBlockTitle.setText(rs.getString("title"));
+                notesBlock.noteBlockDescription.setText(rs.getString("description"));
+                if (rs.getDate("reminderDate") != null) {
+                    notesBlock.notesBlockReminderDateLabel.setText(rs.getDate("reminderDate").toString());
+                }
+                if (rs.getString("priority") != null) {
+                    notesBlock.notesBlockPriority.setText("Prioridade: " + rs.getString("priority"));
+                } else {
+                    notesBlock.notesBlockPriority.setText("");
+                }
+
+                gridBagLayout.setConstraints(notesBlock, gridBagConstraints);
+
+                allNotesPanel.add(notesBlock, gridBagConstraints);
+                gridBagConstraints.gridx++;
+                if (gridBagConstraints.gridx == 5) {
+                    gridBagConstraints.gridx = 0;
+                    gridBagConstraints.gridy++;
+                }
+
+            }
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+    }
+
+    @Override
+    // Método para carregar os lembretes do banco de dados e colocar na GUI.
+    public void retrieveAndAddAllReminders(JPanel allRemindersPanel, GridBagLayout gridBagLayout,
+            GridBagConstraints gridBagConstraints, Home home) throws Exception {
+
+        ResultSet rs = null;
+        try {
+            Statement statement = conn.createStatement();
+            // Nesse PreparedStatement eu passos os atributos onde quero pesquisar no banco.
+            rs = statement.executeQuery("SELECT * FROM notes WHERE reminderDate IS NOT NULL");
+
+            // Percorre o objeto ResultSet pegando cada linha do banco de dados.
+            while (rs.next()) {
+                // Criamos um novo frame do tipo RemindersBlock, para adicionar-mos na GUI.
+                RemindersBlock remindersBlock = new RemindersBlock(home);
 
                 // Set the text of the JLabel and JTextField components with the note data from
                 // the ResultSet
-                notesBlock.notesBlockTitle.setText(rs.getString("title"));
-                notesBlock.noteBlockDescription.setText(rs.getString("description"));
-                notesBlock.notesBlockReminderDateLabel.setText(rs.getDate("reminderDate").toString());
-                notesBlock.notesBlockPriority.setText("Prioridade: " + rs.getString("priority"));
+                remindersBlock.remindersBlockTitle.setText(rs.getString("title"));
+                remindersBlock.remindersBlockDescription.setText(rs.getString("description"));
+                remindersBlock.remindersBlockReminderDateLabel.setText(rs.getDate("reminderDate").toString());
+                if (rs.getString("priority") != null) {
+                    remindersBlock.remindersBlockPriority.setText("Prioridade: " + rs.getString("priority"));
+                } else {
+                    remindersBlock.remindersBlockPriority.setText("");
+                }
 
-                // Add the NotesBlock to the notesPanel
-                allNotesPanel.add(notesBlock);
+                gridBagLayout.setConstraints(remindersBlock, gridBagConstraints);
+                allRemindersPanel.add(remindersBlock, gridBagConstraints);
+                gridBagConstraints.gridx++;
+                if (gridBagConstraints.gridx == 5) {
+                    gridBagConstraints.gridx = 0;
+                    gridBagConstraints.gridy++;
+                }
             }
 
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+    }
+
+    public void updateNotes(int id, String newTitle, String newDescription, String newPriority,
+            java.util.Date newReminderDate) {
+        String sql = "UPDATE notes SET title = ?, description = ?, priority = ?, reminderDate = ? WHERE id = ?";
+        try {
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, newTitle);
+            pstmt.setString(2, newDescription);
+            pstmt.setString(3, newPriority);
+            Date sqlDate = new Date(newReminderDate.getTime());
+            pstmt.setDate(4, sqlDate);
+            pstmt.setInt(5, id);
+            pstmt.executeUpdate();
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }

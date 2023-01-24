@@ -6,6 +6,7 @@ import java.sql.*;
 import javax.swing.*;
 
 import java.awt.*;
+import main.Home;
 
 public class DBController implements Searchable {
     private Connection conn;
@@ -48,6 +49,8 @@ public class DBController implements Searchable {
             }
             if (!note.getPriority().equals("Prioridade")) {
                 pstmt.setString(5, note.getPriority());
+            } else {
+                pstmt.setString(5, null);
             }
             // Apos a preparação, o método executeUpdate() executa a inserção no banco.
             pstmt.executeUpdate();
@@ -108,23 +111,65 @@ public class DBController implements Searchable {
         return rs;
     }
 
+    public void retrieveAndSetNote(int id, Home home) {
+        String sql = "SELECT * FROM notes WHERE id = ?";
+        ResultSet rs = null;
+        PreparedStatement pstmt = null;
+        try {
+            pstmt = conn.prepareStatement(sql);
+            pstmt.setInt(1, id);
+            rs = pstmt.executeQuery();
+            if (rs.next()) {
+
+                if (rs.getString("title") != null) {
+                    home.noteTitle.setText(rs.getString("title"));
+                } else {
+                    home.noteTitle.setText("Título");
+                }
+
+                if (rs.getString("description") != null) {
+                    home.noteDescription.setText(rs.getString("description"));
+                } else {
+                    home.noteDescription.setText("Descrição");
+                }
+
+                home.noteId.setText(String.valueOf(rs.getInt("id")));
+                home.notePriority.setSelectedItem(rs.getString("priority"));
+                home.noteReminderDate.setDate(rs.getDate("reminderDate"));
+            } else {
+                JOptionPane.showMessageDialog(null, "Note not found!");
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+    }
+
+    @Override
     // Método para carregar as notas do banco de dados e colocar na GUI.
     public void retrieveAndAddAllNotes(JPanel allNotesPanel, GridBagLayout gridBagLayout,
-            GridBagConstraints gridBagConstraints) throws Exception {
+            GridBagConstraints gridBagConstraints, Home home) throws Exception {
         ResultSet rs = null;
         try {
             Statement stm = conn.createStatement();
             rs = stm.executeQuery("SELECT * FROM notes");
             while (rs.next()) {
-                NotesBlock notesBlock = new NotesBlock();
+                NotesBlock notesBlock = new NotesBlock(home);
                 notesBlock.notesBlockId.setText("" + rs.getInt("id"));
 
                 notesBlock.notesBlockTitle.setText(rs.getString("title"));
                 notesBlock.noteBlockDescription.setText(rs.getString("description"));
+
                 if (rs.getDate("reminderDate") != null) {
                     notesBlock.notesBlockReminderDateLabel.setText(rs.getDate("reminderDate").toString());
+                } else {
+                    notesBlock.notesBlockReminderDateLabel.setText("");
                 }
-                notesBlock.notesBlockPriority.setText("Prioridade: " + rs.getString("priority"));
+
+                if (rs.getString("priority") != null) {
+                    notesBlock.notesBlockPriority.setText("Prioridade: " + rs.getString("priority"));
+                } else {
+                    notesBlock.notesBlockPriority.setText("");
+                }
                 gridBagLayout.setConstraints(notesBlock, gridBagConstraints);
 
                 allNotesPanel.add(notesBlock, gridBagConstraints);
@@ -141,22 +186,29 @@ public class DBController implements Searchable {
         }
     }
 
-    public void retrieveAndAddAllNotes2(JPanel allNotesPanel, GridBagLayout gridBagLayout,GridBagConstraints gridBagConstraints, String searchTerm) throws Exception {
+    public void searchAndAddAllNotes(JPanel allNotesPanel, GridBagLayout gridBagLayout,
+            GridBagConstraints gridBagConstraints, String searchTerm, Home home) throws Exception {
         ResultSet rs = null;
         try {
-            PreparedStatement pstmt = conn.prepareStatement("SELECT * FROM notes WHERE title LIKE ? OR description LIKE ?");
+            PreparedStatement pstmt = conn
+                    .prepareStatement("SELECT * FROM notes WHERE title LIKE ? OR description LIKE ?");
             pstmt.setString(1, "%" + searchTerm + "%");
             pstmt.setString(2, "%" + searchTerm + "%");
             rs = pstmt.executeQuery();
             while (rs.next()) {
-                NotesBlock notesBlock = new NotesBlock();
-                notesBlock.notesBlockId.setText("" + rs.getInt("id"));
+                NotesBlock notesBlock = new NotesBlock(home);
+                notesBlock.notesBlockId.setText(String.valueOf(rs.getInt("id")));
                 notesBlock.notesBlockTitle.setText(rs.getString("title"));
                 notesBlock.noteBlockDescription.setText(rs.getString("description"));
                 if (rs.getDate("reminderDate") != null) {
                     notesBlock.notesBlockReminderDateLabel.setText(rs.getDate("reminderDate").toString());
                 }
-                notesBlock.notesBlockPriority.setText("Prioridade: " + rs.getString("priority"));
+                if (rs.getString("priority") != null) {
+                    notesBlock.notesBlockPriority.setText("Prioridade: " + rs.getString("priority"));
+                } else {
+                    notesBlock.notesBlockPriority.setText("");
+                }
+
                 gridBagLayout.setConstraints(notesBlock, gridBagConstraints);
 
                 allNotesPanel.add(notesBlock, gridBagConstraints);
@@ -176,7 +228,7 @@ public class DBController implements Searchable {
     @Override
     // Método para carregar os lembretes do banco de dados e colocar na GUI.
     public void retrieveAndAddAllReminders(JPanel allRemindersPanel, GridBagLayout gridBagLayout,
-            GridBagConstraints gridBagConstraints) throws Exception {
+            GridBagConstraints gridBagConstraints, Home home) throws Exception {
 
         ResultSet rs = null;
         try {
@@ -187,14 +239,18 @@ public class DBController implements Searchable {
             // Percorre o objeto ResultSet pegando cada linha do banco de dados.
             while (rs.next()) {
                 // Criamos um novo frame do tipo RemindersBlock, para adicionar-mos na GUI.
-                RemindersBlock remindersBlock = new RemindersBlock();
+                RemindersBlock remindersBlock = new RemindersBlock(home);
 
                 // Set the text of the JLabel and JTextField components with the note data from
                 // the ResultSet
                 remindersBlock.remindersBlockTitle.setText(rs.getString("title"));
                 remindersBlock.remindersBlockDescription.setText(rs.getString("description"));
-                remindersBlock.remindersBlockDateLabel.setText(rs.getDate("reminderDate").toString());
-                remindersBlock.remindersBlockPriority.setText("Prioridade: " + rs.getString("priority"));
+                remindersBlock.remindersBlockReminderDateLabel.setText(rs.getDate("reminderDate").toString());
+                if (rs.getString("priority") != null) {
+                    remindersBlock.remindersBlockPriority.setText("Prioridade: " + rs.getString("priority"));
+                } else {
+                    remindersBlock.remindersBlockPriority.setText("");
+                }
 
                 gridBagLayout.setConstraints(remindersBlock, gridBagConstraints);
                 allRemindersPanel.add(remindersBlock, gridBagConstraints);
@@ -211,7 +267,7 @@ public class DBController implements Searchable {
     }
 
     public void updateNotes(int id, String newTitle, String newDescription, String newPriority,
-            java.sql.Date newReminderDate) {
+            java.util.Date newReminderDate) {
         String sql = "UPDATE notes SET title = ?, description = ?, priority = ?, reminderDate = ? WHERE id = ?";
         try {
             PreparedStatement pstmt = conn.prepareStatement(sql);

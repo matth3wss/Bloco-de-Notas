@@ -1,15 +1,16 @@
 package panels;
 
+import main.Home;
+
 /**
  *
  * @author Matheus
  */
 public class RemindersBlock extends javax.swing.JPanel {
+    Home home;
 
-    /**
-     * Creates new form NotesBLoc
-     */
-    public RemindersBlock() {
+    public RemindersBlock(Home home) {
+        this.home = home;
         initComponents();
     }
 
@@ -23,15 +24,36 @@ public class RemindersBlock extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated
     // <editor-fold defaultstate="collapsed" desc="Generated
     // <editor-fold defaultstate="collapsed" desc="Generated
-    // Code">//GEN-BEGIN:initComponents
+    // <editor-fold defaultstate="collapsed" desc="Generated
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        popupMenu = new javax.swing.JPopupMenu();
+        editOption = new javax.swing.JMenuItem();
+        deleteOption = new javax.swing.JMenuItem();
+        remindersBlockId = new javax.swing.JLabel();
         jScrollPane = new javax.swing.JScrollPane();
         remindersBlockDescription = new javax.swing.JTextArea();
         remindersBlockTitle = new javax.swing.JTextField();
-        remindersBlockDateLabel = new javax.swing.JLabel();
+        remindersBlockReminderDateLabel = new javax.swing.JLabel();
         remindersBlockPriority = new javax.swing.JLabel();
+        btnEditNote = new javax.swing.JButton();
 
+        editOption.setText("Editar");
+        editOption.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editOptionActionPerformed(evt);
+            }
+        });
+        popupMenu.add(editOption);
+
+        deleteOption.setText("Deletar");
+        popupMenu.add(deleteOption);
+
+        remindersBlockId.setText("Id");
+        remindersBlockId.setOpaque(true);
+
+        remindersBlockDescription.setEditable(false);
         remindersBlockDescription.setColumns(20);
         remindersBlockDescription.setRows(5);
         jScrollPane.setViewportView(remindersBlockDescription);
@@ -39,65 +61,84 @@ public class RemindersBlock extends javax.swing.JPanel {
         remindersBlockTitle.setEditable(false);
         remindersBlockTitle.setText("Título");
         remindersBlockTitle.setBorder(null);
-        remindersBlockTitle.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                remindersBlockTitleActionPerformed(evt);
-            }
-        });
 
-        remindersBlockDateLabel.setText("Data do lembrete");
+        remindersBlockReminderDateLabel.setText("Data do lembrete");
 
         remindersBlockPriority.setBackground(new java.awt.Color(255, 255, 255));
         remindersBlockPriority.setText("Prioridade");
 
+        btnEditNote.setText("⋮");
+        btnEditNote.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btnEditNoteMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                btnEditNoteMouseReleased(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jScrollPane)
-                                        .addGroup(layout.createSequentialGroup()
-                                                .addComponent(remindersBlockTitle,
-                                                        javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                        javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED,
-                                                        javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                .addComponent(remindersBlockPriority))
-                                        .addGroup(layout.createSequentialGroup()
-                                                .addComponent(remindersBlockDateLabel,
-                                                        javax.swing.GroupLayout.PREFERRED_SIZE, 100,
-                                                        javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(0, 0, Short.MAX_VALUE)))
-                                .addContainerGap()));
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(remindersBlockTitle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(remindersBlockPriority))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(remindersBlockReminderDateLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnEditNote, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
+        );
         layout.setVerticalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(remindersBlockTitle, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                                javax.swing.GroupLayout.DEFAULT_SIZE,
-                                                javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(remindersBlockPriority))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 114,
-                                        javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(remindersBlockDateLabel)
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(remindersBlockTitle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(remindersBlockPriority))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(remindersBlockReminderDateLabel)
+                    .addComponent(btnEditNote, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void remindersBlockTitleActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_remindersBlockTitleActionPerformed
-        // TODO add your handling code here:
-    }// GEN-LAST:event_remindersBlockTitleActionPerformed
+    private void btnEditNoteMousePressed(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_btnEditNoteMousePressed
+        popupMenu.show(btnEditNote, evt.getX(), evt.getY());
+    }// GEN-LAST:event_btnEditNoteMousePressed
+
+    private void btnEditNoteMouseReleased(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_btnEditNoteMouseReleased
+        popupMenu.show(btnEditNote, evt.getX(), evt.getY());
+    }// GEN-LAST:event_btnEditNoteMouseReleased
+
+    private void editOptionActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_editOptionActionPerformed
+        id = Integer.parseInt(remindersBlockId.getText());
+        int index = home.tabs.indexOfTab("Editar Nota");
+        home.tabs.setSelectedIndex(index);
+        home.db.retrieveAndSetNote(id, home);
+    }// GEN-LAST:event_editOptionActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnEditNote;
+    private javax.swing.JMenuItem deleteOption;
+    private javax.swing.JMenuItem editOption;
     private javax.swing.JScrollPane jScrollPane;
-    public javax.swing.JLabel remindersBlockDateLabel;
+    private javax.swing.JPopupMenu popupMenu;
     public javax.swing.JTextArea remindersBlockDescription;
+    public javax.swing.JLabel remindersBlockId;
     public javax.swing.JLabel remindersBlockPriority;
+    public javax.swing.JLabel remindersBlockReminderDateLabel;
     public javax.swing.JTextField remindersBlockTitle;
     // End of variables declaration//GEN-END:variables
+
+    private int id;
 }
