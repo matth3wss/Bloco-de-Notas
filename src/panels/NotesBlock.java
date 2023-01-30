@@ -1,6 +1,9 @@
 package panels;
 
 import java.awt.Color;
+
+import javax.swing.JPanel;
+
 import main.Home;
 
 /**
@@ -140,10 +143,13 @@ public class NotesBlock extends javax.swing.JPanel {
     private void editOptionActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_editOptionActionPerformed
         id = Integer.parseInt(notesBlockId.getText());
         int index = home.tabs.indexOfTab("Editar Nota");
+        if (index == -1) {
+            home.tabs.addTab("Editar Nota", home.editNoteTab);
+            index = home.tabs.indexOfTab("Editar Nota");
+        }
         home.tabs.setSelectedIndex(index);
         home.db.retrieveAndSetNote(id, home);
-        
-        
+
         if (home.noteTitle.getText().equals("Título")) {
             home.noteTitle.setForeground(Color.LIGHT_GRAY);
             home.noteTitle.setCaretPosition(0);
