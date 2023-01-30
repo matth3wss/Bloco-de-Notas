@@ -522,13 +522,8 @@ public class Home extends javax.swing.JFrame {
     private void btnAddNoteActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnAddNoteActionPerformed
 
         newNote.setTitle(newNoteTitle.getText());
-
-        if (!newNoteDescription.getText().equals("Descrição")) {
-            newNote.setDescription(newNoteDescription.getText());
-        }
-        if (newNoteReminderDate.getDate() != null) {
-            newNote.setReminderDate(newNoteReminderDate.getDate());
-        }
+        newNote.setDescription(newNoteDescription.getText());
+        newNote.setReminderDate(newNoteReminderDate.getDate());
         newNote.setPriority(newNotePriority.getSelectedItem().toString());
 
         try {
@@ -579,7 +574,6 @@ public class Home extends javax.swing.JFrame {
         updateNote.setDescription(noteDescription.getText());
         updateNote.setPriority(notePriority.getSelectedItem().toString());
         updateNote.setReminderDate(noteReminderDate.getDate());
-
 
         try {
             db.updateNotes(id, updateNote);
