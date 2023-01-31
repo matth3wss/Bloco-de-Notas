@@ -134,7 +134,13 @@ public class DBController implements Searchable {
                 }
 
                 home.noteId.setText(String.valueOf(rs.getInt("id")));
-                home.notePriority.setSelectedItem(rs.getString("priority"));
+
+                if (rs.getString("priority") != null) {
+                    home.notePriority.setSelectedItem(rs.getString("priority"));
+                } else {
+                    home.notePriority.setSelectedItem("Prioridade");
+                }
+
                 home.noteReminderDate.setDate(rs.getDate("reminderDate"));
             } else {
                 JOptionPane.showMessageDialog(null, "Note not found!");
@@ -187,7 +193,7 @@ public class DBController implements Searchable {
     }
 
     public void searchAndAddAllNotes(JPanel allNotesPanel, GridBagLayout gridBagLayout,
-            GridBagConstraints gridBagConstraints, String searchTerm, Home home) throws Exception {
+            GridBagConstraints gridBagConstraints, Home home, String searchTerm) throws Exception {
         ResultSet rs = null;
         try {
             PreparedStatement pstmt = conn
@@ -266,16 +272,25 @@ public class DBController implements Searchable {
         }
     }
 
-    public void updateNotes(int id, String newTitle, String newDescription, String newPriority,
-            java.util.Date newReminderDate) {
+    public void updateNotes(int id, NewNote updateNote) {
         String sql = "UPDATE notes SET title = ?, description = ?, priority = ?, reminderDate = ? WHERE id = ?";
         try {
             PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, newTitle);
-            pstmt.setString(2, newDescription);
-            pstmt.setString(3, newPriority);
-            Date sqlDate = new Date(newReminderDate.getTime());
-            pstmt.setDate(4, sqlDate);
+
+            if (!updateNote.getTitle().equals("Título")) {
+                pstmt.setString(1, updateNote.getTitle());
+            }
+            if (!updateNote.getDescription().equals("Descrição")) {
+                pstmt.setString(2, updateNote.getDescription());
+            }
+            if (!updateNote.getPriority().equals("Prioridade")) {
+                pstmt.setString(3, updateNote.getPriority());
+            }
+
+            if (updateNote.getReminderDate() != null) {
+                Date sqlDate = new Date(updateNote.getReminderDate().getTime());
+                pstmt.setDate(4, sqlDate);
+            }
             pstmt.setInt(5, id);
             pstmt.executeUpdate();
         } catch (SQLException e) {

@@ -1,6 +1,7 @@
 package main;
 
 import classes.*;
+import pages.*;
 import java.awt.*;
 import javax.swing.*;
 
@@ -9,7 +10,10 @@ public class Home extends javax.swing.JFrame {
     public DBController db = new DBController("notes.db");
     public CardLayout cardLayout = new CardLayout();
     NewNote newNote = new NewNote();
+    NewNote updateNote = new NewNote();
     SqlDateFormatter sdf = new SqlDateFormatter();
+    Notes notes = new Notes(this);
+    Reminders reminders = new Reminders(this);
 
     public GridBagLayout gridBagLayout = new GridBagLayout();
     public GridBagConstraints gridBagConstraints = new GridBagConstraints(0, 0, 1, 1, 1.0, 1.0,
@@ -17,6 +21,15 @@ public class Home extends javax.swing.JFrame {
             GridBagConstraints.HORIZONTAL, new Insets(0, 0, 0, 0), 0, 0);
 
     public Home() {
+        initComponents();
+        myInitComponents();
+        repaintNotes();
+        repaintReminders();
+    }
+
+    public Home(Notes notes, Reminders reminders) {
+        this.notes = notes;
+        this.reminders = reminders;
         initComponents();
         myInitComponents();
         repaintNotes();
@@ -61,10 +74,24 @@ public class Home extends javax.swing.JFrame {
 
     @SuppressWarnings("")
     // <editor-fold defaultstate="collapsed" desc="Generated
+    // <editor-fold defaultstate="collapsed" desc="Generated
+    // <editor-fold defaultstate="collapsed" desc="Generated
+    // <editor-fold defaultstate="collapsed" desc="Generated
+    // <editor-fold defaultstate="collapsed" desc="Generated
+    // <editor-fold defaultstate="collapsed" desc="Generated
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         noteId = new javax.swing.JLabel();
+        editNoteTab = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        noteDescription = new javax.swing.JTextArea();
+        noteTitle = new javax.swing.JTextField();
+        notePriority = new javax.swing.JComboBox<>();
+        noteReminderDate = new com.toedter.calendar.JDateChooser();
+        noteDateCreatedLabel = new javax.swing.JLabel();
+        btnSaveNote = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
         tabs = new javax.swing.JTabbedPane();
         homeTab = new javax.swing.JPanel();
         sideMenuPanel = new javax.swing.JPanel();
@@ -82,18 +109,98 @@ public class Home extends javax.swing.JFrame {
         reminderDateLabel = new javax.swing.JLabel();
         btnAddNote = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        editNoteTab = new javax.swing.JPanel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        noteDescription = new javax.swing.JTextArea();
-        noteTitle = new javax.swing.JTextField();
-        notePriority = new javax.swing.JComboBox<>();
-        noteReminderDate = new com.toedter.calendar.JDateChooser();
-        noteDateCreatedLabel = new javax.swing.JLabel();
-        btnSaveNote = new javax.swing.JButton();
-        jLabel3 = new javax.swing.JLabel();
-        closeEditTab = new javax.swing.JButton();
 
         noteId.setText("id");
+
+        noteDescription.setColumns(20);
+        noteDescription.setRows(5);
+        noteDescription.setText("Descrição");
+        noteDescription.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                noteDescriptionMousePressed(evt);
+            }
+        });
+        noteDescription.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                noteDescriptionKeyTyped(evt);
+            }
+        });
+        jScrollPane2.setViewportView(noteDescription);
+
+        noteTitle.setText("Título");
+        noteTitle.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                noteTitleMousePressed(evt);
+            }
+        });
+        noteTitle.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                noteTitleKeyTyped(evt);
+            }
+        });
+
+        notePriority.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Prioridade", "Urgente", "Alta", "Média", "Baixa", "Opcional", "Trivial" }));
+        notePriority.setToolTipText("Prioridade");
+        notePriority.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+
+        noteReminderDate.setToolTipText("Escolha a data");
+        noteReminderDate.setDateFormatString("d/MM/y");
+
+        noteDateCreatedLabel.setText("Data de criação: " + sdf.formatSqlDate(newNote.getDateCreated()));
+
+        btnSaveNote.setText("Salvar Nota");
+        btnSaveNote.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                btnSaveNoteMousePressed(evt);
+            }
+        });
+
+        jLabel3.setText("Lembrar-me");
+
+        javax.swing.GroupLayout editNoteTabLayout = new javax.swing.GroupLayout(editNoteTab);
+        editNoteTab.setLayout(editNoteTabLayout);
+        editNoteTabLayout.setHorizontalGroup(
+            editNoteTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(editNoteTabLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(editNoteTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2)
+                    .addGroup(editNoteTabLayout.createSequentialGroup()
+                        .addGroup(editNoteTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(editNoteTabLayout.createSequentialGroup()
+                                .addComponent(noteTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel3))
+                            .addComponent(noteDateCreatedLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(30, 30, 30)
+                        .addGroup(editNoteTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(editNoteTabLayout.createSequentialGroup()
+                                .addComponent(noteReminderDate, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(29, 29, 29)
+                                .addComponent(notePriority, javax.swing.GroupLayout.PREFERRED_SIZE, 316, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btnSaveNote, javax.swing.GroupLayout.PREFERRED_SIZE, 475, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap())
+        );
+        editNoteTabLayout.setVerticalGroup(
+            editNoteTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(editNoteTabLayout.createSequentialGroup()
+                .addGap(12, 12, 12)
+                .addGroup(editNoteTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(noteTitle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(editNoteTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(noteReminderDate, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(notePriority, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(6, 6, 6)
+                .addGroup(editNoteTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(noteDateCreatedLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSaveNote))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 372, Short.MAX_VALUE)
+                .addGap(8, 8, 8))
+        );
+
+        jScrollPane1.getVerticalScrollBar().setUnitIncrement(1000);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(new javax.swing.OverlayLayout(getContentPane()));
@@ -101,11 +208,6 @@ public class Home extends javax.swing.JFrame {
         tabs.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 tabsStateChanged(evt);
-            }
-        });
-        tabs.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                tabsFocusGained(evt);
             }
         });
 
@@ -195,8 +297,8 @@ public class Home extends javax.swing.JFrame {
             }
         });
         newNoteTitle.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                newNoteTitleKeyPressed(evt);
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                newNoteTitleKeyTyped(evt);
             }
         });
 
@@ -266,129 +368,11 @@ public class Home extends javax.swing.JFrame {
 
         tabs.addTab("Nova Nota", newNoteTab);
 
-        noteDescription.setColumns(20);
-        noteDescription.setRows(5);
-        noteDescription.setText("Descrição");
-        noteDescription.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                noteDescriptionMousePressed(evt);
-            }
-        });
-        noteDescription.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                noteDescriptionKeyTyped(evt);
-            }
-        });
-        jScrollPane2.setViewportView(noteDescription);
-
-        noteTitle.setText("Título");
-        noteTitle.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                noteTitleMousePressed(evt);
-            }
-        });
-        noteTitle.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                noteTitleKeyTyped(evt);
-            }
-        });
-
-        notePriority.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Prioridade", "Urgente", "Alta", "Média", "Baixa", "Opcional", "Trivial" }));
-        notePriority.setToolTipText("Prioridade");
-        notePriority.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-
-        noteReminderDate.setToolTipText("Escolha a data");
-        noteReminderDate.setDateFormatString("d/MM/y");
-
-        noteDateCreatedLabel.setText("Data de criação: " + sdf.formatSqlDate(newNote.getDateCreated()));
-
-        btnSaveNote.setText("Salvar Nota");
-        btnSaveNote.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                btnSaveNoteMousePressed(evt);
-            }
-        });
-
-        jLabel3.setText("Lembrar-me");
-
-        closeEditTab.setText("Fechar");
-        closeEditTab.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                closeEditTabMouseClicked(evt);
-            }
-        });
-
-        javax.swing.GroupLayout editNoteTabLayout = new javax.swing.GroupLayout(editNoteTab);
-        editNoteTab.setLayout(editNoteTabLayout);
-        editNoteTabLayout.setHorizontalGroup(
-            editNoteTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(editNoteTabLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(editNoteTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2)
-                    .addGroup(editNoteTabLayout.createSequentialGroup()
-                        .addGroup(editNoteTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(editNoteTabLayout.createSequentialGroup()
-                                .addComponent(noteTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel3))
-                            .addComponent(noteDateCreatedLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(30, 30, 30)
-                        .addGroup(editNoteTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(editNoteTabLayout.createSequentialGroup()
-                                .addComponent(noteReminderDate, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(29, 29, 29)
-                                .addComponent(notePriority, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(btnSaveNote, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(6, 6, 6)
-                        .addComponent(closeEditTab)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
-        );
-        editNoteTabLayout.setVerticalGroup(
-            editNoteTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(editNoteTabLayout.createSequentialGroup()
-                .addGap(12, 12, 12)
-                .addGroup(editNoteTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(noteTitle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(closeEditTab)
-                    .addGroup(editNoteTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(noteReminderDate, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(notePriority, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(5, 5, 5)
-                .addGroup(editNoteTabLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(noteDateCreatedLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnSaveNote))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 372, Short.MAX_VALUE)
-                .addGap(8, 8, 8))
-        );
-
-        jScrollPane1.getVerticalScrollBar().setUnitIncrement(1000);
-
-        tabs.addTab("Editar Nota", editNoteTab);
-
         getContentPane().add(tabs);
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void tabsFocusGained(java.awt.event.FocusEvent evt) {// GEN-FIRST:event_tabsFocusGained
-        if (noteTitle.getText().equals("Título")) {
-            noteTitle.setForeground(Color.LIGHT_GRAY);
-            noteTitle.setCaretPosition(0);
-        } else {
-            noteTitle.setForeground(Color.BLACK);
-        }
-        if (noteDescription.getText().equals("Descrição")) {
-            noteDescription.setForeground(Color.LIGHT_GRAY);
-            noteDescription.setCaretPosition(0);
-        } else {
-            noteDescription.setForeground(Color.BLACK);
-        }
-    }// GEN-LAST:event_tabsFocusGained
 
     private void tabsStateChanged(javax.swing.event.ChangeEvent evt) {// GEN-FIRST:event_tabsStateChanged
         switch (tabs.getSelectedIndex()) {
@@ -414,23 +398,24 @@ public class Home extends javax.swing.JFrame {
                 noteTitle.setText("Título");
                 noteDescription.setText("Descrição");
             }
-            // case 2 -> {
-            // if (noteTitle.getText().equals("Título")) {
-            // noteTitle.setForeground(Color.LIGHT_GRAY);
-            // noteTitle.setCaretPosition(0);
-            // } else {
-            // noteTitle.setForeground(Color.BLACK);
-            // }
-            // if (noteDescription.getText().equals("Descrição")) {
-            // noteDescription.setForeground(Color.LIGHT_GRAY);
-            // noteDescription.setCaretPosition(0);
-            // } else {
-            // noteDescription.setForeground(Color.BLACK);
-            // }
+            case 2 -> {
+                if (noteTitle.getText().equals("Título")) {
+                    noteTitle.setForeground(Color.LIGHT_GRAY);
+                    noteTitle.setCaretPosition(0);
+                } else {
+                    noteTitle.setForeground(Color.BLACK);
+                }
+                if (noteDescription.getText().equals("Descrição")) {
+                    noteDescription.setForeground(Color.LIGHT_GRAY);
+                    noteDescription.setCaretPosition(0);
+                } else {
+                    noteDescription.setForeground(Color.BLACK);
+                }
+                newNoteTitle.setText("Título");
+                newNoteDescription.setText("Descrição");
 
-            // }
+            }
         }
-
     }// GEN-LAST:event_tabsStateChanged
 
     private void btnNotesActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnNotesActionPerformed
@@ -460,12 +445,12 @@ public class Home extends javax.swing.JFrame {
 
     }// GEN-LAST:event_newNoteDescriptionMousePressed
 
-    private void newNoteTitleKeyPressed(java.awt.event.KeyEvent evt) {// GEN-FIRST:event_newNoteTitleKeyPressed
+    private void newNoteTitleKeyTyped(java.awt.event.KeyEvent evt) {// GEN-FIRST:event_newNoteTitleKeyTyped
         if (newNoteTitle.getText().equals("Título")) {
             newNoteTitle.setText("");
         }
         newNoteTitle.setForeground(Color.BLACK);
-    }// GEN-LAST:event_newNoteTitleKeyPressed
+    }// GEN-LAST:event_newNoteTitleKeyTyped
 
     private void newNoteDescriptionKeyTyped(java.awt.event.KeyEvent evt) {// GEN-FIRST:event_newNoteDescriptionKeyTyped
         if (newNoteDescription.getText().equals("Descrição")) {
@@ -475,12 +460,10 @@ public class Home extends javax.swing.JFrame {
     }// GEN-LAST:event_newNoteDescriptionKeyTyped
 
     private void btnAddNoteActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnAddNoteActionPerformed
+
         newNote.setTitle(newNoteTitle.getText());
         newNote.setDescription(newNoteDescription.getText());
         newNote.setReminderDate(newNoteReminderDate.getDate());
-        if (newNoteReminderDate.getDate() != null) {
-            newNote.setReminderDate(newNoteReminderDate.getDate());
-        }
         newNote.setPriority(newNotePriority.getSelectedItem().toString());
 
         try {
@@ -493,9 +476,7 @@ public class Home extends javax.swing.JFrame {
     }// GEN-LAST:event_btnAddNoteActionPerformed
 
     private void closeEditTabMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_closeEditTabMouseClicked
-        int index = tabs.getSelectedIndex();
-        tabs.remove(index);
-        tabs.setSelectedIndex(0);
+
     }// GEN-LAST:event_closeEditTabMouseClicked
 
     private void noteTitleMousePressed(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_noteTitleMousePressed
@@ -526,14 +507,22 @@ public class Home extends javax.swing.JFrame {
 
     private void btnSaveNoteMousePressed(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_btnSaveNoteMousePressed
         int id = Integer.parseInt(noteId.getText());
+
+        updateNote.setTitle(noteTitle.getText());
+        updateNote.setDescription(noteDescription.getText());
+        updateNote.setPriority(notePriority.getSelectedItem().toString());
+        updateNote.setReminderDate(noteReminderDate.getDate());
+
         try {
-            db.updateNotes(id, noteTitle.getText(), noteDescription.getText(),
-                    notePriority.getSelectedItem().toString(), noteReminderDate.getDate());
+            db.updateNotes(id, updateNote);
             repaintNotes();
             repaintReminders();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
+
+        tabs.remove(2);
+        tabs.setSelectedIndex(0);
     }// GEN-LAST:event_btnSaveNoteMousePressed
 
     /**
@@ -569,10 +558,9 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JButton btnNotes;
     private javax.swing.JButton btnReminders;
     private javax.swing.JButton btnSaveNote;
-    private javax.swing.JButton closeEditTab;
-    private pages.Notes contentNotesPage;
+    public pages.Notes contentNotesPage;
     public javax.swing.JPanel contentPanel;
-    private pages.Reminders contentRemindersPage;
+    public pages.Reminders contentRemindersPage;
     public javax.swing.JPanel editNoteTab;
     private javax.swing.JPanel homeTab;
     private javax.swing.JLabel jLabel1;
