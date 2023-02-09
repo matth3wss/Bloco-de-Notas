@@ -13,5 +13,8 @@ public interface Searchable {
         public void retrieveAndAddAllReminders(JPanel panel, GridBagLayout gridBagLayout,
                         GridBagConstraints gridBagConstraints, Home home) throws Exception;
 
-        public void repaintNotes(Home home);
+        // public void repaintNotes(Home home);
+        public void repaintNotes(Home home, String searchText);
+
+        public void repaintReminders(Home home);
 }

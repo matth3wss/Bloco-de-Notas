@@ -103,111 +103,93 @@ public class DBController implements Searchable {
     // Método para carregar as notas do banco de dados e colocar na GUI.
     public void retrieveAndAddAllNotes(JPanel allNotesPanel, GridBagLayout gridBagLayout,
             GridBagConstraints gridBagConstraints, Home home) throws Exception {
+        retrieveAndAddAllNotes(allNotesPanel, gridBagLayout, gridBagConstraints, home, "");
+    }
+
+    public void retrieveAndAddAllNotes(JPanel allNotesPanel, GridBagLayout gridBagLayout,
+            GridBagConstraints gridBagConstraints, Home home, String searchTerm) throws Exception {
         ResultSet rs = null;
+        String query = "";
+        if (searchTerm == null || searchTerm.equals("")) {
+            query = "SELECT * FROM notes";
+        } else {
+            query = "SELECT * FROM notes WHERE title LIKE ? OR description LIKE ?";
+        }
         try {
-            Statement stm = conn.createStatement();
-            rs = stm.executeQuery("SELECT * FROM notes");
+            if (query.equals("SELECT * FROM notes")) {
+                PreparedStatement pstmt = conn.prepareStatement(query);
+                rs = pstmt.executeQuery();
+            } else {
+                PreparedStatement pstmt = conn.prepareStatement(query);
+                pstmt.setString(1, "%" + searchTerm + "%");
+                pstmt.setString(2, "%" + searchTerm + "%");
+                rs = pstmt.executeQuery();
+            }
             while (rs.next()) {
                 NotesBlock notesBlock = new NotesBlock(home);
                 notesBlock.notesBlockId.setText("" + rs.getInt("id"));
-
                 notesBlock.notesBlockTitle.setText(rs.getString("title"));
                 notesBlock.noteBlockDescription.setText(rs.getString("description"));
-
                 if (rs.getDate("reminderDate") != null) {
                     notesBlock.notesBlockReminderDateLabel.setText(rs.getDate("reminderDate").toString());
                 } else {
                     notesBlock.notesBlockReminderDateLabel.setText("");
                 }
-
                 if (rs.getString("priority") != null) {
                     notesBlock.notesBlockPriority.setText("Prioridade: " + rs.getString("priority"));
                 } else {
                     notesBlock.notesBlockPriority.setText("");
                 }
                 gridBagLayout.setConstraints(notesBlock, gridBagConstraints);
-
                 allNotesPanel.add(notesBlock, gridBagConstraints);
                 gridBagConstraints.gridx++;
                 if (gridBagConstraints.gridx == 5) {
                     gridBagConstraints.gridx = 0;
                     gridBagConstraints.gridy++;
                 }
-
             }
-
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
-        }
-    }
-
-    public void searchAndAddAllNotes(JPanel allNotesPanel, GridBagLayout gridBagLayout,
-            GridBagConstraints gridBagConstraints, Home home, String searchTerm) throws Exception {
-        ResultSet rs = null;
-    try {
-
-            PreparedStatement pstmt = conn
-                    .prepareStatement("SELECT * FROM notes WHERE title LIKE ? OR description LIKE ?");
-            pstmt.setString(1, "%" + searchTerm + "%");
-            pstmt.setString(2, "%" + searchTerm + "%");
-            rs = pstmt.executeQuery();
-            while (rs.next()) {
-                NotesBlock notesBlock = new NotesBlock(home);
-                notesBlock.notesBlockId.setText(String.valueOf(rs.getInt("id")));
-                notesBlock.notesBlockTitle.setText(rs.getString("title"));
-                notesBlock.noteBlockDescription.setText(rs.getString("description"));
-                if (rs.getDate("reminderDate") != null) {
-                    notesBlock.notesBlockReminderDateLabel.setText(rs.getDate("reminderDate").toString());
-                }
-                if (rs.getString("priority") != null) {
-                    notesBlock.notesBlockPriority.setText("Prioridade: " + rs.getString("priority"));
-                } else {
-                    notesBlock.notesBlockPriority.setText("");
-                }
-
-                gridBagLayout.setConstraints(notesBlock, gridBagConstraints);
-
-                allNotesPanel.add(notesBlock, gridBagConstraints);
-                gridBagConstraints.gridx++;
-                if (gridBagConstraints.gridx == 5) {
-                    gridBagConstraints.gridx = 0;
-                    gridBagConstraints.gridy++;
-                }
-
-            }
-
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
     }
 
     @Override
-    // Método para carregar os lembretes do banco de dados e colocar na GUI.
+    // Method to load reminders from the database and display in the GUI
     public void retrieveAndAddAllReminders(JPanel allRemindersPanel, GridBagLayout gridBagLayout,
             GridBagConstraints gridBagConstraints, Home home) throws Exception {
+        retrieveAndAddAllReminders(allRemindersPanel, gridBagLayout, gridBagConstraints, home, "");
+    }
 
+    public void retrieveAndAddAllReminders(JPanel allRemindersPanel, GridBagLayout gridBagLayout,
+            GridBagConstraints gridBagConstraints, Home home, String searchTerm) throws Exception {
         ResultSet rs = null;
+        String query = "";
+        if (searchTerm == null || searchTerm.equals("")) {
+            query = "SELECT * FROM notes WHERE reminderDate IS NOT NULL";
+        } else {
+            query = "SELECT * FROM notes WHERE (title LIKE ? OR description LIKE ?) AND reminderDate IS NOT NULL";
+        }
         try {
-            Statement statement = conn.createStatement();
-            // Nesse PreparedStatement eu passos os atributos onde quero pesquisar no banco.
-            rs = statement.executeQuery("SELECT * FROM notes WHERE reminderDate IS NOT NULL");
+            if (query.equals("SELECT * FROM notes WHERE reminderDate IS NOT NULL")) {
+                PreparedStatement pstmt = conn.prepareStatement(query);
+                rs = pstmt.executeQuery();
+            } else {
+                PreparedStatement pstmt = conn.prepareStatement(query);
+                pstmt.setString(1, "%" + searchTerm + "%");
+                pstmt.setString(2, "%" + searchTerm + "%");
+                rs = pstmt.executeQuery();
+            }
 
-            // Percorre o objeto ResultSet pegando cada linha do banco de dados.
             while (rs.next()) {
-                // Criamos um novo frame do tipo RemindersBlock, para adicionar-mos na GUI.
                 RemindersBlock remindersBlock = new RemindersBlock(home);
-
-                // Set the text of the JLabel and JTextField components with the note data from
-                // the ResultSet
                 remindersBlock.remindersBlockTitle.setText(rs.getString("title"));
                 remindersBlock.remindersBlockDescription.setText(rs.getString("description"));
                 remindersBlock.remindersBlockReminderDateLabel.setText(rs.getDate("reminderDate").toString());
                 if (rs.getString("priority") != null) {
-                    remindersBlock.remindersBlockPriority.setText("Prioridade: " + rs.getString("priority"));
+                    remindersBlock.remindersBlockPriority.setText("Priority: " + rs.getString("priority"));
                 } else {
                     remindersBlock.remindersBlockPriority.setText("");
                 }
-
                 gridBagLayout.setConstraints(remindersBlock, gridBagConstraints);
                 allRemindersPanel.add(remindersBlock, gridBagConstraints);
                 gridBagConstraints.gridx++;
@@ -216,7 +198,6 @@ public class DBController implements Searchable {
                     gridBagConstraints.gridy++;
                 }
             }
-
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
@@ -247,13 +228,37 @@ public class DBController implements Searchable {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
     }
-    @Override
+
     public void repaintNotes(Home home) {
+        repaintNotes(home, null);
+    }
+
+    public void repaintNotes(Home home, String searchText) {
         home.contentNotesPage.allNotesPanel.setLayout(home.gridBagLayout);
         try {
             home.contentNotesPage.allNotesPanel.removeAll();
-            retrieveAndAddAllNotes(home.contentNotesPage.allNotesPanel, home.gridBagLayout, home.gridBagConstraints, home);
+            retrieveAndAddAllNotes(home.contentNotesPage.allNotesPanel, home.gridBagLayout, home.gridBagConstraints,
+                    home, searchText);
             for (Component c : home.contentNotesPage.allNotesPanel.getComponents()) {
+                home.gridBagLayout.setConstraints(c, home.gridBagConstraints);
+                home.gridBagConstraints.gridy++;
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+    }
+
+    public void repaintReminders(Home home) {
+        repaintReminders(home, null);
+    }
+
+    public void repaintReminders(Home home, String searchText) {
+        home.contentRemindersPage.allRemindersPanel.setLayout(home.gridBagLayout);
+        try {
+            home.contentRemindersPage.allRemindersPanel.removeAll();
+            retrieveAndAddAllReminders(home.contentRemindersPage.allRemindersPanel, home.gridBagLayout,
+                    home.gridBagConstraints, home, searchText);
+            for (Component c : home.contentRemindersPage.allRemindersPanel.getComponents()) {
                 home.gridBagLayout.setConstraints(c, home.gridBagConstraints);
                 home.gridBagConstraints.gridy++;
             }
@@ -272,4 +277,5 @@ public class DBController implements Searchable {
         }
 
     }
+
 }

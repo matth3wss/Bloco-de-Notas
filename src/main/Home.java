@@ -524,7 +524,7 @@ public class Home extends javax.swing.JFrame {
         try {
             db.addNote(newNote);
             db.repaintNotes(this);
-            repaintReminders();
+            db.repaintReminders(this);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
