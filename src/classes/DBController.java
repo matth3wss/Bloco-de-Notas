@@ -60,57 +60,6 @@ public class DBController implements Searchable {
         }
     }
 
-    @Override
-    // Método para pesquisar notas no banco de dados.
-    public ResultSet searchNotes(String query) {
-        // Nessa string sql, eu quero selecionar todas as colunas da tabela notes
-        // onde o título ou a descrição contenham a string passada no construtor.
-        String sql = "SELECT * FROM notes WHERE title LIKE ? OR description LIKE ?";
-        // ResultSet cria um objeto que salvas as linhas onde os dados pesquisado se
-        // encontram
-        ResultSet rs = null;
-        try {
-            // Nesse PreparedStatement eu passos os atributos onde quero pesquisar no banco.
-            PreparedStatement pstmt = conn.prepareStatement(sql);
-            // As % servem para fazer buscas parciais, ou seja,
-            // vai retornar todas as notas que possuam a palavra pesquisada.
-            pstmt.setString(1, "%" + query + "%");
-            pstmt.setString(2, "%" + query + "%");
-
-            // Aqui executamos uma pesquisa no banco usando o "pstmt" e salvamos
-            // o resultado na variável "rs".
-            rs = pstmt.executeQuery();
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
-        }
-        return rs;
-    }
-
-    @Override
-    // Método para pesquisar lembretes no banco de dados.
-    public ResultSet searchReminders(String query) {
-        // Nessa string sql, eu quero selecionar todas as colunas da tabela notes
-        // onde o título ou a descrição contenham a string passada no construtor.
-        String sql = "SELECT * FROM notes WHERE title LIKE ? OR description LIKE ?";
-        // ResultSet cria um objeto que salvas as linhas onde os dados pesquisado se
-        // encontram
-        ResultSet rs = null;
-        try {
-            // Nesse PreparedStatement eu passos os atributos onde quero pesquisar no banco.
-            PreparedStatement pstmt = conn.prepareStatement(sql);
-            // As % servem para fazer buscas parciais, ou seja,
-            // vai retornar todas as notas que possuam a palavra pesquisada.
-            pstmt.setString(1, "%" + query + "%");
-
-            // Aqui executamos uma pesquisa no banco usando o "pstmt" e salvamos
-            // o resultado na variável "rs".
-            rs = pstmt.executeQuery();
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
-        }
-        return rs;
-    }
-
     public void retrieveAndSetNote(int id, Home home) {
         String sql = "SELECT * FROM notes WHERE id = ?";
         ResultSet rs = null;
@@ -195,7 +144,8 @@ public class DBController implements Searchable {
     public void searchAndAddAllNotes(JPanel allNotesPanel, GridBagLayout gridBagLayout,
             GridBagConstraints gridBagConstraints, Home home, String searchTerm) throws Exception {
         ResultSet rs = null;
-        try {
+    try {
+
             PreparedStatement pstmt = conn
                     .prepareStatement("SELECT * FROM notes WHERE title LIKE ? OR description LIKE ?");
             pstmt.setString(1, "%" + searchTerm + "%");
@@ -294,6 +244,20 @@ public class DBController implements Searchable {
             pstmt.setInt(5, id);
             pstmt.executeUpdate();
         } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+    }
+    @Override
+    public void repaintNotes(Home home) {
+        home.contentNotesPage.allNotesPanel.setLayout(home.gridBagLayout);
+        try {
+            home.contentNotesPage.allNotesPanel.removeAll();
+            retrieveAndAddAllNotes(home.contentNotesPage.allNotesPanel, home.gridBagLayout, home.gridBagConstraints, home);
+            for (Component c : home.contentNotesPage.allNotesPanel.getComponents()) {
+                home.gridBagLayout.setConstraints(c, home.gridBagConstraints);
+                home.gridBagConstraints.gridy++;
+            }
+        } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
     }

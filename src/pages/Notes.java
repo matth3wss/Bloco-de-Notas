@@ -2,13 +2,11 @@ package pages;
 
 import javax.swing.*;
 
+import classes.Searchable;
 import main.Home;
-
 import java.awt.*;
 
-//import frames.NewNoteFrame;
-
-public class Notes extends javax.swing.JPanel {
+public class Notes extends javax.swing.JPanel implements Searchable {
     Home home;
 
     public Notes() {
@@ -125,12 +123,10 @@ public class Notes extends javax.swing.JPanel {
         try {
             home.db.searchAndAddAllNotes(home.contentNotesPage.allNotesPanel, home.gridBagLayout,
                     home.gridBagConstraints, home, searchNotes.getText());
+            repaintNotes(home);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
-
-        // home.db.searchAndAddAllNotes(contentNotesPage.allNotesPanel, gridBagLayout,
-        // gridBagConstraints, this, searchNotes.getText());
 
     }// GEN-LAST:event_searchNotesKeyTyped
 
@@ -149,4 +145,35 @@ public class Notes extends javax.swing.JPanel {
     private javax.swing.JScrollPane scrollPanelAllNotes;
     public javax.swing.JTextField searchNotes;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void retrieveAndAddAllNotes(JPanel panel, GridBagLayout gridBagLayout, GridBagConstraints gridBagConstraints,
+            Home home) throws Exception {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void retrieveAndAddAllReminders(JPanel panel, GridBagLayout gridBagLayout,
+            GridBagConstraints gridBagConstraints, Home home) throws Exception {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void repaintNotes(Home home) {
+        home.contentNotesPage.allNotesPanel.setLayout(home.gridBagLayout);
+        try {
+            home.contentNotesPage.allNotesPanel.removeAll();
+            retrieveAndAddAllNotes(home.contentNotesPage.allNotesPanel, home.gridBagLayout, home.gridBagConstraints,
+                    home);
+            for (Component c : home.contentNotesPage.allNotesPanel.getComponents()) {
+                home.gridBagLayout.setConstraints(c, home.gridBagConstraints);
+                home.gridBagConstraints.gridy++;
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+
+    }
 }

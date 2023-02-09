@@ -1,15 +1,8 @@
 package panels;
 
 import java.awt.Color;
-
-import javax.swing.JPanel;
-
 import main.Home;
 
-/**
- *
- * @author Matheus
- */
 public class NotesBlock extends javax.swing.JPanel {
     Home home;
 
