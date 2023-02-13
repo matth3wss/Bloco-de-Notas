@@ -23,8 +23,8 @@ public class Home extends javax.swing.JFrame {
     public Home() {
         initComponents();
         myInitComponents();
-        repaintNotes();
-        repaintReminders();
+        db.repaintNotes(this);
+        db.repaintReminders(this);
     }
 
     public Home(Notes notes, Reminders reminders) {
@@ -32,43 +32,14 @@ public class Home extends javax.swing.JFrame {
         this.reminders = reminders;
         initComponents();
         myInitComponents();
-        repaintNotes();
-        repaintReminders();
+        db.repaintNotes(this);
+        db.repaintReminders(this);
     }
 
     public void myInitComponents() {
         contentPanel.setLayout(cardLayout);
         contentPanel.add(contentNotesPage, "NewNote");
         contentPanel.add(contentRemindersPage, "NewTaskList");
-    }
-
-    public void repaintNotes() {
-        contentNotesPage.allNotesPanel.setLayout(gridBagLayout);
-        try {
-            contentNotesPage.allNotesPanel.removeAll();
-            db.retrieveAndAddAllNotes(contentNotesPage.allNotesPanel, gridBagLayout, gridBagConstraints, this);
-            for (Component c : contentNotesPage.allNotesPanel.getComponents()) {
-                gridBagLayout.setConstraints(c, gridBagConstraints);
-                gridBagConstraints.gridy++;
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
-        }
-    }
-
-    public void repaintReminders() {
-        contentRemindersPage.allRemindersPanel.setLayout(gridBagLayout);
-        try {
-            contentRemindersPage.allRemindersPanel.removeAll();
-            db.retrieveAndAddAllReminders(contentRemindersPage.allRemindersPanel, gridBagLayout, gridBagConstraints,
-                    this);
-            for (Component c : contentRemindersPage.allRemindersPanel.getComponents()) {
-                gridBagLayout.setConstraints(c, gridBagConstraints);
-                gridBagConstraints.gridy++;
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
-        }
     }
 
     @SuppressWarnings("")
@@ -566,8 +537,8 @@ public class Home extends javax.swing.JFrame {
 
         try {
             db.updateNotes(id, updateNote);
-            repaintNotes();
-            repaintReminders();
+            db.repaintNotes(this);
+            db.repaintReminders(this);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }

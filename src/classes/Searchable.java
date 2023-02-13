@@ -16,5 +16,5 @@ public interface Searchable {
         // public void repaintNotes(Home home);
         public void repaintNotes(Home home, String searchText);
 
-        public void repaintReminders(Home home);
+        public void repaintReminders(Home home, String searchText);
 }

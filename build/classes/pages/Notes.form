@@ -21,7 +21,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="scrollPanelAllNotes" max="32767" attributes="0"/>
                   <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace min="0" pref="274" max="32767" attributes="0"/>
+                      <EmptySpace min="0" pref="113" max="32767" attributes="0"/>
                       <Component id="btnNewNote" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Component id="searchNotes" alignment="0" max="32767" attributes="0"/>
@@ -36,7 +36,7 @@
               <EmptySpace min="-2" max="-2" attributes="0"/>
               <Component id="searchNotes" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="scrollPanelAllNotes" pref="158" max="32767" attributes="0"/>
+              <Component id="scrollPanelAllNotes" pref="151" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="btnNewNote" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" max="-2" attributes="0"/>
