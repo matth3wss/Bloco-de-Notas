@@ -273,6 +273,7 @@ public class DBController implements Searchable {
                 RemindersBlock remindersBlock = new RemindersBlock(home);
                 // Define o título, descrição e data de lembrete na "RemindersBlock" com base
                 // nos resultados da consulta
+                remindersBlock.remindersBlockId.setText("" + rs.getInt("id"));
                 remindersBlock.remindersBlockTitle.setText(rs.getString("title"));
                 remindersBlock.remindersBlockDescription.setText(rs.getString("description"));
                 remindersBlock.remindersBlockReminderDateLabel.setText(rs.getDate("reminderDate").toString());
