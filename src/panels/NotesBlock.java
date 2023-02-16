@@ -1,15 +1,8 @@
 package panels;
 
 import java.awt.Color;
-
-import javax.swing.JPanel;
-
 import main.Home;
 
-/**
- *
- * @author Matheus
- */
 public class NotesBlock extends javax.swing.JPanel {
     Home home;
 
@@ -166,7 +159,10 @@ public class NotesBlock extends javax.swing.JPanel {
     }// GEN-LAST:event_editOptionActionPerformed
 
     private void deleteOptionActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_deleteOptionActionPerformed
-        // TODO add your handling code here:
+        id = Integer.parseInt(notesBlockId.getText());
+        home.db.deleteNote(id);
+        home.db.repaintNotes(home);
+        home.db.repaintReminders(home);
     }// GEN-LAST:event_deleteOptionActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

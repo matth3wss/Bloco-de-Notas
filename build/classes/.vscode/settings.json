@@ -1,7 +1,0 @@
-{
-    "java.project.referencedLibraries": [
-        "lib/**/*.jar",
-        "c:\\Users\\Matheus\\Downloads\\libraries\\sqlite-jdbc-3.40.0.0.jar",
-        "c:\\Users\\Matheus\\Downloads\\libraries\\jcalendar-1.4.jar"
-    ]
-}

@@ -3,10 +3,7 @@ package pages;
 import javax.swing.*;
 
 import main.Home;
-
 import java.awt.*;
-
-//import frames.NewNoteFrame;
 
 public class Notes extends javax.swing.JPanel {
     Home home;
@@ -39,7 +36,7 @@ public class Notes extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated
     // <editor-fold defaultstate="collapsed" desc="Generated
     // <editor-fold defaultstate="collapsed" desc="Generated
-    // Code">//GEN-BEGIN:initComponents
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
         searchNotes = new javax.swing.JTextField();
@@ -72,37 +69,35 @@ public class Notes extends javax.swing.JPanel {
             }
         });
 
-        allNotesPanel.setBorder(
-                javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder("")));
+        allNotesPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder("")));
         allNotesPanel.setLayout(new java.awt.GridBagLayout());
         scrollPanelAllNotes.setViewportView(allNotesPanel);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(scrollPanelAllNotes)
-                                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING,
-                                                layout.createSequentialGroup()
-                                                        .addGap(0, 274, Short.MAX_VALUE)
-                                                        .addComponent(btnNewNote))
-                                        .addComponent(searchNotes))
-                                .addContainerGap()));
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(scrollPanelAllNotes)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 113, Short.MAX_VALUE)
+                        .addComponent(btnNewNote))
+                    .addComponent(searchNotes))
+                .addContainerGap())
+        );
         layout.setVerticalGroup(
-                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(searchNotes, javax.swing.GroupLayout.PREFERRED_SIZE,
-                                        javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(scrollPanelAllNotes, javax.swing.GroupLayout.DEFAULT_SIZE, 158,
-                                        Short.MAX_VALUE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnNewNote)
-                                .addContainerGap()));
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(searchNotes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(scrollPanelAllNotes, javax.swing.GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnNewNote)
+                .addContainerGap())
+        );
     }// </editor-fold>//GEN-END:initComponents
 
     private void searchNotesMousePressed(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_searchNotesMousePressed
@@ -123,14 +118,12 @@ public class Notes extends javax.swing.JPanel {
 
         home.contentNotesPage.allNotesPanel.removeAll();
         try {
-            home.db.searchAndAddAllNotes(home.contentNotesPage.allNotesPanel, home.gridBagLayout,
-                    home.gridBagConstraints, home, searchNotes.getText());
+            home.db.retrieveAndAddAllNotes(home.contentNotesPage.allNotesPanel, home.gridBagLayout,
+                    home.gridBagConstraints, home, searchNotes.getText().equals("") ? null : searchNotes.getText());
+            home.db.repaintNotes(home, searchNotes.getText().equals("") ? null : searchNotes.getText());
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }
-
-        // home.db.searchAndAddAllNotes(contentNotesPage.allNotesPanel, gridBagLayout,
-        // gridBagConstraints, this, searchNotes.getText());
 
     }// GEN-LAST:event_searchNotesKeyTyped
 
@@ -149,4 +142,5 @@ public class Notes extends javax.swing.JPanel {
     private javax.swing.JScrollPane scrollPanelAllNotes;
     public javax.swing.JTextField searchNotes;
     // End of variables declaration//GEN-END:variables
+
 }
