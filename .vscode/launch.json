@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Launch Home",
+            "request": "launch",
+            "mainClass": "main.Home",
+            "projectName": "Trabalho Final (Bloco de Notas)_19a82549"
+        },
+        {
+            "type": "java",
             "name": "Launch Current File",
             "request": "launch",
             "mainClass": "${file}"

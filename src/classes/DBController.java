@@ -1,13 +1,14 @@
 package classes;
 
 import javax.swing.*;
+import blocks.*;
 import java.awt.*;
 import java.sql.*;
 import main.Home;
-import panels.*;
 
 public class DBController implements Searchable {
     private Connection conn;
+    private String dbFile;
 
     /**
      * Construtor que faz a conexão com o banco de dados.
@@ -16,11 +17,12 @@ public class DBController implements Searchable {
      * @param dbFile
      */
     public DBController(String dbFile) {
+        this.dbFile = dbFile;
         try {
             Class.forName("org.sqlite.JDBC");
             conn = DriverManager.getConnection("jdbc:sqlite:" + dbFile);
         } catch (SQLException e) {
-            // Exibe mensagem de erro caso a conexão com o banco falhe
+            // Exibe mensagem de erro caso a conexão falhe
             JOptionPane.showMessageDialog(null, e.getMessage());
         } catch (ClassNotFoundException e) {
             // Exibe mensagem de erro caso o driver do JDBC não seja encontrado
@@ -38,7 +40,6 @@ public class DBController implements Searchable {
         // A string sql é um argumento passado para o gerenciador de banco de dados
         // para que ele saiba onde inserir os dados no banco.
         String sql = "INSERT INTO notes (title, description, dateCreated, reminderDate, priority) VALUES (?, ?, ?, ?, ?)";
-
         try {
             // PreparedStatement faz uma preparação para a inserção dos dados
             // no banco, ele define em quais colunas os dados serão inseridos.
@@ -49,9 +50,7 @@ public class DBController implements Searchable {
             if (!note.getDescription().equals("Descrição")) {
                 pstmt.setString(2, note.getDescription());
             }
-
             pstmt.setDate(3, note.getDateCreated());
-
             if (note.getReminderDate() != null) {
                 Date sqlDate = new Date(note.getReminderDate().getTime());
                 pstmt.setDate(4, sqlDate);
@@ -63,10 +62,9 @@ public class DBController implements Searchable {
             }
             // Apos a preparação, o método executeUpdate() executa a inserção no banco.
             pstmt.executeUpdate();
-
         } catch (SQLException e) {
             // Exibe mensagem de erro caso a operação de inserção falhe
-            JOptionPane.showMessageDialog(null, e.getMessage());
+            JOptionPane.showMessageDialog(null, "Falha ao adicionar nota no banco de dados");
         }
     }
 
@@ -119,11 +117,11 @@ public class DBController implements Searchable {
                 home.noteReminderDate.setDate(rs.getDate("reminderDate"));
             } else {
                 // Caso não haja resultados, exibe uma mensagem de erro
-                JOptionPane.showMessageDialog(null, "Note not found!");
+                JOptionPane.showMessageDialog(null, "Nota não encontrada");
             }
         } catch (SQLException e) {
             // Caso haja uma exceção de SQL, exibe a mensagem de erro
-            JOptionPane.showMessageDialog(null, e.getMessage());
+            JOptionPane.showMessageDialog(null, "Falha ao recuperar nota do banco de dados");
         }
     }
 
@@ -194,7 +192,6 @@ public class DBController implements Searchable {
                 } else {
                     notesBlock.notesBlockReminderDateLabel.setText("");
                 }
-
                 // Verifica se existe prioridade e a adiciona na "NotesBlock", caso contrário,
                 // deixa vazia.
                 if (rs.getString("priority") != null) {
@@ -218,7 +215,7 @@ public class DBController implements Searchable {
         } catch (SQLException e) {
             // Exibe uma mensagem de erro caso haja algum problema com a consulta ao banco
             // de dados.
-            JOptionPane.showMessageDialog(null, e.getMessage());
+            JOptionPane.showMessageDialog(null, "Falha ao recuperar notas do banco de dados");
         }
     }
 
@@ -280,7 +277,7 @@ public class DBController implements Searchable {
                 // Verifica se a prioridade existe e a adiciona na "RemindersBlock", caso
                 // contrário, deixa vazia.
                 if (rs.getString("priority") != null) {
-                    remindersBlock.remindersBlockPriority.setText("Priority: " + rs.getString("priority"));
+                    remindersBlock.remindersBlockPriority.setText("Prioridade: " + rs.getString("priority"));
                 } else {
                     remindersBlock.remindersBlockPriority.setText("");
                 }
@@ -296,7 +293,7 @@ public class DBController implements Searchable {
             }
         } catch (SQLException e) {
             // Exibe uma mensagem de erro caso ocorra uma exceção SQL
-            JOptionPane.showMessageDialog(null, e.getMessage());
+            JOptionPane.showMessageDialog(null, "Falha ao recuperar lembretes do banco de dados");
         }
     }
 
@@ -313,7 +310,6 @@ public class DBController implements Searchable {
         String sql = "UPDATE notes SET title = ?, description = ?, priority = ?, reminderDate = ? WHERE id = ?";
         try {
             PreparedStatement pstmt = conn.prepareStatement(sql);
-
             // Verifica se o título da nota foi atualizado
             if (!updateNote.getTitle().equals("Título")) {
                 pstmt.setString(1, updateNote.getTitle());
@@ -339,7 +335,7 @@ public class DBController implements Searchable {
             pstmt.executeUpdate();
         } catch (SQLException e) {
             // Exibe uma mensagem de erro caso ocorra uma exceção durante a atualização
-            JOptionPane.showMessageDialog(null, e.getMessage());
+            JOptionPane.showMessageDialog(null, "Falha ao atualizar nota no banco de dados");
         }
     }
 
@@ -371,8 +367,10 @@ public class DBController implements Searchable {
             }
         } catch (Exception e) {
             // Exibe uma mensagem de erro com a mensagem da exceção
-            JOptionPane.showMessageDialog(null, e.getMessage());
+            JOptionPane.showMessageDialog(null, "Falha ao fazer o repaint das notas do banco de dados");
         }
+        home.contentNotesPage.allNotesPanel.revalidate();
+        home.contentNotesPage.allNotesPanel.repaint();
     }
 
     /**
@@ -415,8 +413,10 @@ public class DBController implements Searchable {
         } catch (Exception e) {
             // Esta linha exibe um diálogo de mensagem de erro com a mensagem de exceção se
             // houver uma.
-            JOptionPane.showMessageDialog(null, e.getMessage());
+            JOptionPane.showMessageDialog(null, "Falha ao fazer o repaint dos lembretes do banco de dados");
         }
+        home.contentRemindersPage.allRemindersPanel.revalidate();
+        home.contentRemindersPage.allRemindersPanel.repaint();
     }
 
     /**
@@ -429,7 +429,6 @@ public class DBController implements Searchable {
         // Aqui é criada a string com a instrução SQL para deletar a nota com o ID
         // especificado.
         String sql = "DELETE FROM notes WHERE id = ?";
-
         try {
             // Aqui é criado um objeto PreparedStatement a partir da conexão com o banco de
             // dados (conn)
@@ -443,7 +442,7 @@ public class DBController implements Searchable {
             pstmt.executeUpdate();
         } catch (SQLException e) {
             // Em caso de erro, uma mensagem é exibida com a mensagem de erro.
-            JOptionPane.showMessageDialog(null, e.getMessage());
+            JOptionPane.showMessageDialog(null, "Falha ao deletar nota do banco de dados");
         }
     }
 
@@ -460,7 +459,7 @@ public class DBController implements Searchable {
         } catch (SQLException e) {
             // Caso ocorra alguma exceção ao fechar a conexão, uma mensagem com a mensagem
             // de erro é exibida.
-            JOptionPane.showMessageDialog(null, e.getMessage());
+            JOptionPane.showMessageDialog(null, "Falha ao fechar conexão com o banco de dados");
         }
     }
 }
