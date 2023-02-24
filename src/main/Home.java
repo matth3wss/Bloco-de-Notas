@@ -46,12 +46,6 @@ public class Home extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated
     // <editor-fold defaultstate="collapsed" desc="Generated
     // <editor-fold defaultstate="collapsed" desc="Generated
-    // <editor-fold defaultstate="collapsed" desc="Generated
-    // <editor-fold defaultstate="collapsed" desc="Generated
-    // <editor-fold defaultstate="collapsed" desc="Generated
-    // <editor-fold defaultstate="collapsed" desc="Generated
-    // <editor-fold defaultstate="collapsed" desc="Generated
-    // <editor-fold defaultstate="collapsed" desc="Generated
     // Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -418,11 +412,7 @@ public class Home extends javax.swing.JFrame {
                 } else {
                     newNoteDescription.setForeground(Color.BLACK);
                 }
-                noteTitle.setText("Título");
-                noteDescription.setText("Descrição");
-                if (tabs.getTabCount() == 3) {
-                    tabs.remove(2);
-                }
+                newNoteReminderDate.setDate(null);
             }
             case 2 -> {
                 if (noteTitle.getText().equals("Título")) {
@@ -492,12 +482,20 @@ public class Home extends javax.swing.JFrame {
         newNote.setReminderDate(newNoteReminderDate.getDate());
         newNote.setPriority(newNotePriority.getSelectedItem().toString());
 
-        try {
-            db.addNote(newNote);
-            db.repaintNotes(this);
-            db.repaintReminders(this);
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
+        int result = JOptionPane.showOptionDialog(null, "Deseja salvar a nota?", "Adicionar nota",
+                JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
+                new String[] { "Sim", "Não" }, "default");
+        if (result == JOptionPane.YES_OPTION) {
+            try {
+                db.addNote(newNote);
+                db.repaintNotes(this);
+                db.repaintReminders(this);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, e.getMessage());
+            }
+            tabs.setSelectedIndex(0);
+        } else {
+            tabs.setSelectedIndex(1);
         }
     }// GEN-LAST:event_btnAddNoteActionPerformed
 
@@ -551,7 +549,6 @@ public class Home extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Windows".equals(info.getName())) {
