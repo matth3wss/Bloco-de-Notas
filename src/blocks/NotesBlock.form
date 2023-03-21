@@ -55,22 +55,22 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       <Component id="notesBlockPriority" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <Group type="102" alignment="0" attributes="0">
+                  <Group type="102" alignment="1" attributes="0">
                       <Component id="notesBlockReminderDateLabel" min="-2" pref="100" max="-2" attributes="0"/>
-                      <EmptySpace pref="79" max="32767" attributes="0"/>
+                      <EmptySpace pref="70" max="32767" attributes="0"/>
                       <Component id="btnEditNote" min="-2" pref="18" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="notesBlockTitle" min="-2" max="-2" attributes="0"/>
-                          <Component id="noteBlockDescription" alignment="0" pref="195" max="32767" attributes="0"/>
+                          <Component id="noteBlockDescription" alignment="0" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
                   </Group>
@@ -87,13 +87,14 @@
                   <Component id="notesBlockTitle" min="-2" max="-2" attributes="0"/>
                   <Component id="notesBlockPriority" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
-              <Component id="noteBlockDescription" min="-2" pref="113" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="notesBlockReminderDateLabel" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="btnEditNote" alignment="3" pref="20" max="32767" attributes="0"/>
+              <Component id="noteBlockDescription" min="-2" pref="115" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="btnEditNote" min="-2" pref="20" max="-2" attributes="0"/>
+                  <Component id="notesBlockReminderDateLabel" alignment="0" min="-2" max="-2" attributes="0"/>
               </Group>
+              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
