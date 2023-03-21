@@ -4,7 +4,6 @@ import main.Home;
 import java.awt.Color;
 
 import javax.swing.JOptionPane;
-import javax.swing.SwingConstants;
 
 /**
  *
