@@ -1,4 +1,4 @@
-# Projeto com SQLite e JCalendar
+# Bloco de Notas com SQLite e JCalendar
 
 Este é um projeto simples que utiliza o SQLite e o JCalendar para criar um bloco de notas que permite ao usuário criar notas e lembretes com data.
 
